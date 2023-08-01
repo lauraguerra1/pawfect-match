@@ -14,6 +14,24 @@ describe('template spec', () => {
       .get('.pet-choice').last().contains('bark-mate')
   })
 
+  it('should assert the titles of dog and cat questions', () => {
+    cy.get('.pet-choice').last().contains('bark-mate').click()
+      .clickButton('Next Question')
+      .get('.question').contains('How loyal are you?')
+      .get('.instructions').contains('slide the rating bar to change your answer')
+      .clickButton('Next Question')
+      .get('.question').contains('What is your energy level?')
+      .clickButton('Next Question')
+      .get('.question').contains('How much do you like to cuddle?')
+      .restartQuiz()
+      .get('.pet-choice').first().contains('soul-meow').click()
+      .clickButton('Next Question')  
+      .get('.question').contains('How often do you solve problems on your own?')
+      .clickButton('Next Question') 
+      .get('.question').contains('How clean are you?')
+      .clickButton('Next Question')
+      .get('.question').contains('How much do you like to cuddle?')
+  })
 
   it('should answer quiz questions for dog then go back and answer for cat', () => {
 
