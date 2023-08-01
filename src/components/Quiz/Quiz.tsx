@@ -16,12 +16,18 @@ const allQuestions = {
   'dog': dogQuestions
 }
 
-const Quiz = () => {
+interface QuizProps {
+  updateAnswers: (answer: string, queryNumber: number) => void
+  notifyReady: () => void
+}
+
+const Quiz = ({updateAnswers, notifyReady}: QuizProps) => {
   const [selectedPet, setSelectedPet] = useState('cat')
   const [question, setQuestion] = useState<Question>(dogOrCat)
   const [sliderBar, setSliderBar] = useState<{visible: boolean, rating: string}>({visible: false, rating: ''})
   const [ratingAnswer, setRatingAnswer] = useState('')
   const [questionNumber, setQuestionNumber] = useState(0)
+
 
   useEffect(() => {
     const ratingAnswer = question.answers.find(answer => answer.value === sliderBar.rating)
@@ -48,12 +54,25 @@ const Quiz = () => {
   }, [questionNumber])
   
 
-  const goToNextQuestion = () => setQuestionNumber(prev => prev +1)
+  const goToNextQuestion = () => {
+    if(questionNumber) {
+      updateAnswers(sliderBar.rating, questionNumber)
+    } else {
+      updateAnswers(selectedPet, questionNumber)
+    }
+    setQuestionNumber(prev => prev +1)
+  }
+
   const goToPrevQuestion = () => setQuestionNumber(prev => prev -1)
+
+  const submitQuiz = () => {
+    updateAnswers(sliderBar.rating, questionNumber)
+    notifyReady()
+  }
   
   const animalEls = question.answers.map(answer => {
     return (
-    <section className={selectedPet === answer.value ? 'selected pet-choice' : 'pet-choice'} onClick={() => setSelectedPet(answer.value)}>
+    <section key={answer.value} className={selectedPet === answer.value ? 'selected pet-choice' : 'pet-choice'} onClick={() => setSelectedPet(answer.value)}>
       <img src={(images as Indexable)[answer.value]} alt={`${answer.value}`}/>
       <p>{answer.answer}</p>
     </section>
@@ -89,7 +108,7 @@ const Quiz = () => {
         </div>
       }
       {questionNumber < 3 && <button onClick={goToNextQuestion} className='next-btn'>Next Question</button>}
-      {questionNumber === 3 && <button className='next-btn'>Submit Quiz!</button>}
+      {questionNumber === 3 && <button onClick={submitQuiz} className='next-btn'>Submit Quiz!</button>}
     </section>
   )
 }

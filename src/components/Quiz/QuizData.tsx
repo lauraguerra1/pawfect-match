@@ -20,33 +20,33 @@ const catQuestions: Question[] = [
     question: 'How often do you solve problems on your own? ',
     query: 'intelligence',
     answers: [
-      {answer: 'Every day, all day!', value: '1'},
-      {answer: 'Most of the time, but I\'m not afraid to ask for help when I need it.', value: '2'},
+      {answer: 'Never, I appreciate all the help I can get!', value: '1'},
+      {answer: 'Once in a while.', value: '2'},
       {answer: 'Sometimes, if I\'m feeling smart or confident.', value: '3'},
-      {answer: 'Once in a while.', value: '4'},
-      {answer: 'Never, I appreciate all the help I can get!', value: '5'}
+      {answer: 'Most of the time, but I\'m not afraid to ask for help when I need it.', value: '4'},
+      {answer: 'Every day, all day!', value: '5'}
     ]
   },
   {  
     question: 'How clean are you?',
     query: 'shedding',
     answers: [
-      {answer: 'I\'m a clean freak!', value: '1'},
-      {answer: 'I keep things tidy, and if something gets messy I can clean it up.', value: '2'},
+      {answer: 'Dude, anything goes in my house.', value: '1'},
+      {answer: 'I only clean up when I have guests.', value: '2'},
       {answer: 'I don\'t mind cleaning up, but I\'m ok with letting things go if I\'m busy.', value: '3'},
-      {answer: 'I only clean up when I have guests.', value: '4'},
-      {answer: 'Dude, anything goes in my house.', value: '5'}
+      {answer: 'I keep things tidy, and if something gets messy I can clean it up.', value: '4'},
+      {answer: 'I\'m a clean freak!', value: '5'}
     ]
   },
   {  
     question: 'How much do you like to cuddle?',
     query: 'playfulness',
     answers: [
-      {answer: 'I LOVE SNUGGLES!', value: '1'},
-      {answer: 'Pretty much most of the time, sign me up! ', value: '2'},
+      {answer: 'Ew, no. Get off me!', value: '1'},
+      {answer: 'Rarely, and only  if I\'m in the mood for it. ', value: '2'},
       {answer: 'It depends on the moment! ', value: '3'},
-      {answer: 'Rarely, and only  if I\'m in the mood for it. ', value: '4'},
-      {answer: 'Ew, no. Get off me!', value: '5'}
+      {answer: 'Pretty much most of the time, sign me up! ', value: '4'},
+      {answer: 'I LOVE SNUGGLES!', value: '5'},
     ]
   },
 ]
