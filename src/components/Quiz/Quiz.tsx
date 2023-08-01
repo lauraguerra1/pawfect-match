@@ -1,8 +1,9 @@
 import './Quiz.css'
 import { useState, useEffect } from 'react'
-import { Question, dogQuestions, dogOrCat } from './QuizData'
+import { Question, dogQuestions, catQuestions, dogOrCat } from './QuizData'
 import kitty from '../../images/kitty.png'
 import puppy from '../../images/puppy.png'
+import back from '../../images/back.png'
 import { Indexable } from '../../types'
 
 const images = {
@@ -10,11 +11,17 @@ const images = {
   'dog': puppy
 }
 
+const allQuestions = {
+  'cat': catQuestions,
+  'dog': dogQuestions
+}
+
 const Quiz = () => {
   const [selectedPet, setSelectedPet] = useState('cat')
   const [question, setQuestion] = useState<Question>(dogOrCat)
   const [sliderBar, setSliderBar] = useState<{visible: boolean, rating: string}>({visible: false, rating: ''})
   const [ratingAnswer, setRatingAnswer] = useState('')
+  const [questionNumber, setQuestionNumber] = useState(0)
 
   useEffect(() => {
     const ratingAnswer = question.answers.find(answer => answer.value === sliderBar.rating)
@@ -31,7 +38,18 @@ const Quiz = () => {
       setSliderBar({visible: true, rating: '3'})
     }
   }, [question])
+
+  useEffect(() => {
+    if(questionNumber) {
+      setQuestion((allQuestions as Indexable)[selectedPet][questionNumber -1])
+    } else {
+      setQuestion(dogOrCat)
+    }
+  }, [questionNumber])
   
+
+  const goToNextQuestion = () => setQuestionNumber(prev => prev +1)
+  const goToPrevQuestion = () => setQuestionNumber(prev => prev -1)
   
   const animalEls = question.answers.map(answer => {
     return (
@@ -44,6 +62,7 @@ const Quiz = () => {
 
   return (
     <section className='quiz'>
+      {questionNumber > 0 && <button onClick={goToPrevQuestion} className='back-btn'><img src={back} alt='back button' /></button>}
       <header className='quiz-header'>
         <h1 className='question header-child'>{question.question}</h1>
         {sliderBar.visible && <p className='instructions header-child'>slide the rating bar to change your answer</p>}
@@ -69,7 +88,8 @@ const Quiz = () => {
           {animalEls}
         </div>
       }
-      <button className='next-btn'>Next Question</button>
+      {questionNumber < 3 && <button onClick={goToNextQuestion} className='next-btn'>Next Question</button>}
+      {questionNumber === 3 && <button className='next-btn'>Submit Quiz!</button>}
     </section>
   )
 }
