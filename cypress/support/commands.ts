@@ -58,3 +58,7 @@ Cypress.Commands.add('chooseRange', (range: number, answer: string) => {
 Cypress.Commands.add('clickButton', (button:string) => {
   cy.get('button').contains(button).click()
 })
+
+// Cypress.Commands.add('takeQuiz', (animal:string, ratings: number[]) => {
+
+// })
