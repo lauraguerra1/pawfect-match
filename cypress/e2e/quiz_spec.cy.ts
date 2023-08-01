@@ -1,3 +1,5 @@
+import {dogQuestions, catQuestions} from '../../src/components/Quiz/QuizData'
+
 describe('template spec', () => {
   beforeEach(() => {
     cy.visit('http://localhost:3000/quiz')
@@ -34,7 +36,6 @@ describe('template spec', () => {
   })
 
   it('should answer quiz questions for dog then go back and answer for cat', () => {
-
     cy.takeQuiz('dog', [
       {rating:1, answer: 'I am loyal to no one.'}, 
       {rating:2, answer: 'I prefer to chill out most of the time.'},
@@ -46,5 +47,15 @@ describe('template spec', () => {
       {rating:4, answer: 'I keep things tidy, and if something gets messy I can clean it up.'},
       {rating:5, answer: 'I LOVE SNUGGLES!'}, 
     ])  
+  })
+
+  it('should answer quiz questions with all possible answers for dog and cat', () => {
+    cy.get('.pet-choice').first().contains('soul-meow').click()
+      .clickButton('Next Question') 
+      .testAllAnswers(catQuestions)
+      .restartQuiz()
+      .get('.pet-choice').last().contains('bark-mate').click()
+      .clickButton('Next Question')
+      .testAllAnswers(dogQuestions)
   })
 })

@@ -43,7 +43,7 @@ const catQuestions: Question[] = [
     query: 'playfulness',
     answers: [
       {answer: 'Ew, no. Get off me!', value: '1'},
-      {answer: 'Rarely, and only  if I\'m in the mood for it. ', value: '2'},
+      {answer: "Not very often", value: '2'},
       {answer: 'It depends on the moment! ', value: '3'},
       {answer: 'Pretty much most of the time, sign me up! ', value: '4'},
       {answer: 'I LOVE SNUGGLES!', value: '5'},
@@ -68,10 +68,10 @@ const dogQuestions: Question[] = [
     question: 'What is your energy level? ',
     query: 'energy',
     answers: [
-      {answer: 'I\’m a proud couch potato.', value: '1'},
+      {answer: 'I\'m a proud couch potato.', value: '1'},
       {answer: 'I prefer to chill out most of the time. ', value: '2'},
       {answer: 'I can be energetic, but I also like to relax.', value: '3'},
-      {answer: 'I\'m  a go -getter, always looking for new things to do.', value: '4'},
+      {answer: 'I am always looking for new things to do.', value: '4'},
       {answer: 'I\'m practically bouncing off the walls!', value: '5'},
     ]
   },
@@ -80,7 +80,7 @@ const dogQuestions: Question[] = [
     query: 'playfulness',
     answers: [
       {answer: 'Ew, no. Get off me!', value: '1'},
-      {answer: 'Rarely, and only  if I\'m in the mood for it.', value: '2'},
+      {answer: 'Not very often', value: '2'},
       {answer: 'It depends on the moment! ', value: '3'},
       {answer: 'Pretty much most of the time, sign me up!', value: '4'},
       {answer: 'I LOVE SNUGGLES!', value: '5'}

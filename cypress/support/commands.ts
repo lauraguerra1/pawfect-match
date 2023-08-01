@@ -1,40 +1,14 @@
-// <reference types="cypress" />
-// ***********************************************
-// This example commands.ts shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-//
-// declare global {
-//   namespace Cypress {
-//     interface Chainable {
-//       login(email: string, password: string): Chainable<void>
-//       drag(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       dismiss(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       visit(originalFn: CommandOriginalFn, url: string, options: Partial<VisitOptions>): Chainable<Element>
-//     }
-//   }
-// }
+type Answer = {
+  answer: string,
+  value: string
+}
+
+type Question = {
+  question: string,
+  query: string;
+  answers: Answer[]
+}
+
 declare namespace Cypress {
   interface Chainable {
     navigate(button:string, url:string): Chainable<JQuery<HTMLElement>>
@@ -42,6 +16,7 @@ declare namespace Cypress {
     clickButton(button:string): Chainable<JQuery<HTMLElement>>
     takeQuiz(animal:string, ratings: {rating: number, answer:string}[]): Chainable<JQuery<HTMLElement>>
     restartQuiz(): Chainable<JQuery<HTMLElement>>
+    testAllAnswers(questions: Question[]): Chainable<JQuery<HTMLElement>>
   }
 }
 
@@ -50,18 +25,18 @@ Cypress.Commands.add('navigate', (button, url) => {
   .url().should('eq', `http://localhost:3000${url}`)
 })
 
-Cypress.Commands.add('chooseRange', (range: number, answer: string) => {
+Cypress.Commands.add('chooseRange', (range, answer) => {
   cy.get('input[type="range"]').invoke('val', range)
   .get('input[type="range"]').should('have.value', range)
   .get(`#marker${range}`).click()
-  .get('.rating-answer > p').contains(answer)
+  .get('[data-cy="answer"]').contains(answer)
 })
 
-Cypress.Commands.add('clickButton', (button:string) => {
+Cypress.Commands.add('clickButton', (button) => {
   cy.get('button').contains(button).click()
 })
 
-Cypress.Commands.add('takeQuiz', (animal:string, ratings: {rating: number, answer:string}[]) => {
+Cypress.Commands.add('takeQuiz', (animal, ratings) => {
   let selectedOrder = ['last', 'last', 'first']
   if(animal === 'cat') selectedOrder = ['first', 'first', 'last']
   cy.get('.question').contains('Are you looking for your soul-meow or your bark-mate?')
@@ -79,4 +54,13 @@ Cypress.Commands.add('restartQuiz', () => {
   cy.get('.back-btn').click()
     .get('.back-btn').click()
     .get('.back-btn').click()
+})
+
+Cypress.Commands.add('testAllAnswers', (questions) => {
+  questions.forEach((question, i) => {
+      question.answers.forEach((answer) => {
+        cy.chooseRange(parseInt(answer.value), answer.answer)
+      })
+    i < 2 ? cy.clickButton('Next Question') : cy.get('button').contains('Submit Quiz!')
+  })
 })

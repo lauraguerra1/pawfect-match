@@ -99,7 +99,7 @@ const Quiz = ({updateAnswers, notifyReady}: QuizProps) => {
           </div>
         </div>
         <article className='rating-answer'>
-          <p>{ratingAnswer}</p>
+          <p data-cy='answer'>{ratingAnswer}</p>
         </article>
       </>}
       {!sliderBar.visible && 
