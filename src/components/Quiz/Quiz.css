@@ -22,6 +22,7 @@
 
 .header-child {
   margin: 5px;
+  text-align: center;
 }
 
 .question {
@@ -88,10 +89,25 @@ input[type="range"] {
   min-height: fit-content;
   display: flex;
   justify-content: center;
-  align-items: center;
   text-align: center;
   border-radius: 15px; 
   padding: 1px 10px;
+  overflow-y: auto;
+}
+
+.rating-answer > p{
+  margin: auto;
+}
+
+.next-btn {
+  background: rgba(233, 176, 227, 0.71);
+  border-radius: 25px;
+  border: none;
+  width: 250px;
+  font-weight: 400;
+  align-self: flex-end;
+  margin-right: 5%;
+  cursor: pointer;
 }
 
 
@@ -109,10 +125,23 @@ input[type="range"] {
   .quiz {
     width: 80vw;
   }
+
+  .next-btn {
+    margin: 0;
+    align-self: center;
+  }
 }
 
 @media screen and (max-width: 675px) {
   .quiz {
     width: 90vw;
+  }
+
+  .rating-answer{
+    font-size: 40px;
+  }
+
+  .quiz {
+    height: 100vh;
   }
 }

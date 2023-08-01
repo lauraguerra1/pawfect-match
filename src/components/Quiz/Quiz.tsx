@@ -32,8 +32,9 @@ const Quiz = () => {
         </div>
       </div>
       <article className='rating-answer'>
-        {ratingAnswer}
+        <p>{ratingAnswer}</p>
       </article>
+      <button className='next-btn'>Next Question</button>
     </section>
   )
 }
