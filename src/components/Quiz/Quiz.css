@@ -1,0 +1,101 @@
+.quiz {
+  background-color: rgba(139, 211, 251, 0.30);
+  border-radius: 14px;
+  height: 80vh;
+  width: 60vw;
+  align-self: center;
+  margin-top: 10px;
+  overflow-y: scroll;
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  justify-content: space-around;
+}
+
+.quiz::-webkit-scrollbar {
+  width: 12px;
+}
+
+.quiz::-webkit-scrollbar-thumb {
+  background-color: #EAE3A6;
+  border-radius: 5px;
+}
+
+.quiz-header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-child {
+  margin: 5px;
+}
+
+.question {
+  width: 80%;
+  border-bottom: 2px solid black;
+}
+
+.slider-bar-container{
+  width: 100%;
+  display: flex; 
+  flex-direction: column;
+  align-items: center; 
+}
+
+input[type="range"] {
+  width: 70%
+}
+
+.range-markers {
+  width: 70%;
+  display: flex; 
+  text-align: center;
+}
+
+.marker {
+  width: 15.33%;
+}
+
+.marker:hover {
+  cursor: pointer;
+}
+
+.marker > p {
+  margin: 0;
+}
+
+#marker1 {
+  text-align: start;
+}
+
+#marker2 > p {
+  padding-right: 25%
+}
+
+#marker2, #marker4 {
+  width: 27%;
+}
+
+#marker4 > p {
+  padding-left: 25%
+}
+
+#marker5 {
+  text-align: end;
+}
+
+
+@media screen and (max-width: 1100px) {
+  .quiz {
+    width: 80vw;
+  }
+}
+
+@media screen and (max-width: 675px) {
+  .quiz {
+    width: 90vw;
+  }
+}
