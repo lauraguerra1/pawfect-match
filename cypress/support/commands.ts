@@ -38,10 +38,23 @@
 declare namespace Cypress {
   interface Chainable {
     navigate(button:string, url:string): Chainable<JQuery<HTMLElement>>
+    chooseRange(range:number, answer:string): Chainable<JQuery<HTMLElement>>
+    clickButton(button:string): Chainable<JQuery<HTMLElement>>
   }
 }
 
 Cypress.Commands.add('navigate', (button, url) => {
   cy.get('a').contains(button).click()
   .url().should('eq', `http://localhost:3000${url}`)
+})
+
+Cypress.Commands.add('chooseRange', (range: number, answer: string) => {
+  cy.get('input[type="range"]').invoke('val', range)
+  .get('input[type="range"]').should('have.value', range)
+  .get(`#marker${range}`).click()
+  .get('.rating-answer > p').contains(answer)
+})
+
+Cypress.Commands.add('clickButton', (button:string) => {
+  cy.get('button').contains(button).click()
 })
