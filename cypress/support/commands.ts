@@ -1,4 +1,4 @@
-/// <reference types="cypress" />
+// <reference types="cypress" />
 // ***********************************************
 // This example commands.ts shows you how to
 // create various custom commands and overwrite
@@ -35,3 +35,13 @@
 //     }
 //   }
 // }
+declare namespace Cypress {
+  interface Chainable {
+    navigate(button:string, url:string): Chainable<JQuery<HTMLElement>>
+  }
+}
+
+Cypress.Commands.add('navigate', (button, url) => {
+  cy.get('a').contains(button).click()
+  .url().should('eq', `http://localhost:3000${url}`)
+})

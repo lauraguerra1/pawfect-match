@@ -11,9 +11,9 @@ const Menu = ({openOrClose}: MenuProps) => {
   return (
     <nav className='menu'>
       <button onClick={() => openOrClose(false)} className='close-menu'><img src={close} alt='close menu button'/></button>
-      <Link to='/' className='link menu-link'>Home</Link>
-      <Link to='/quiz' className='link menu-link'>Quiz</Link>
-      <Link to='/saved-pets' className='link menu-link'>My Pets</Link>
+      <Link onClick={() => openOrClose(false)} to='/' className='link menu-link'>Home</Link>
+      <Link onClick={() => openOrClose(false)} to='/quiz' className='link menu-link'>Quiz</Link>
+      <Link onClick={() => openOrClose(false)} to='/saved-pets' className='link menu-link'>My Pets</Link>
     </nav>
   )
 }
