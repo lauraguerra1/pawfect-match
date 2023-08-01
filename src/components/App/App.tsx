@@ -1,6 +1,7 @@
 import { Routes, Route, Link } from 'react-router-dom';
 import LandingPage from '../LandingPage/LandingPage';
 import NavBar from '../NavBar/NavBar';
+import Menu from '../Menu/Menu'
 import './App.css';
 import { useState } from 'react';
 
@@ -13,8 +14,7 @@ const App= () => {
 
   return (
     <main>
-      <NavBar menuOpen={menuOpen} openOrClose={openOrClose}/>
-      {/* <Menu menuOpen={menuOpen} openOrClose={openOrClose}/> */}
+      {menuOpen? <Menu openOrClose={openOrClose}/> : <NavBar openOrClose={openOrClose}/>}
       <Routes>
         <Route path='/' element={<LandingPage menuOpen={menuOpen}/>}/>
       </Routes>

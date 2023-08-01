@@ -1,4 +1,4 @@
-nav {
+.nav {
   display: flex; 
   justify-content: space-between;
   align-items: center;
@@ -13,6 +13,10 @@ nav {
 
 .nav-link {
   margin: 0px 20px;
+}
+
+.nav-link.active {
+  border-bottom: 1px solid black;
 }
 
 .logo {

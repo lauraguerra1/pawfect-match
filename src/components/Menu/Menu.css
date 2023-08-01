@@ -1,0 +1,26 @@
+.menu {
+  height: 70vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.close-menu {
+  background-color: #00000000;
+  border: none;
+  align-self: flex-end;
+}
+
+.menu-link {
+  width: 40%;
+  padding-bottom: 10px;
+  text-align: center;
+  border-bottom: 1px solid black;
+}
+
+@media screen and (max-width: 325px) {
+  .menu-link {
+    width: 70%;
+  }
+}
