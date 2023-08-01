@@ -14,35 +14,19 @@ describe('template spec', () => {
       .get('.pet-choice').last().contains('bark-mate')
   })
 
+
   it('should answer quiz questions for dog then go back and answer for cat', () => {
-    cy.get('.question').contains('Are you looking for your soul-meow or your bark-mate?')
-      .get('.pet-choice').last().click()
-      .get('.pet-choice').last().should('have.class', 'selected')
-      .get('.pet-choice').first().should('not.have.class', 'selected')
-      .clickButton('Next Question')
-      .get('.question').contains('How loyal are you?')
-      .get('.instructions').contains('slide the rating bar to change your answer')
-      .chooseRange(1, 'I am loyal to no one.')
-      .clickButton('Next Question')
-      .chooseRange(2, 'I prefer to chill out most of the time.')
-      .clickButton('Next Question')
-      .chooseRange(3, 'It depends on the moment!')
-      .get('button').contains('Submit Quiz!')
-      .get('.back-btn').click()
-      .get('.back-btn').click()
-      .get('.back-btn').click()
-    cy.get('.question').contains('Are you looking for your soul-meow or your bark-mate?')
-      .get('.pet-choice').first().click()
-      .get('.pet-choice').first().should('have.class', 'selected')
-      .get('.pet-choice').last().should('not.have.class', 'selected')
-      .clickButton('Next Question')
-      .get('.question').contains('How often do you solve problems on your own?')
-      .chooseRange(3, 'Sometimes, if I\'m feeling smart or confident.')
-      .clickButton('Next Question')
-      .get('.question').contains('How clean are you?')
-      .chooseRange(4, 'I keep things tidy, and if something gets messy I can clean it up.')
-      .clickButton('Next Question')
-      .chooseRange(5, 'I LOVE SNUGGLES!')
-      .get('button').contains('Submit Quiz!')
-    })
+
+    cy.takeQuiz('dog', [
+      {rating:1, answer: 'I am loyal to no one.'}, 
+      {rating:2, answer: 'I prefer to chill out most of the time.'},
+      {rating:3, answer: 'It depends on the moment!'}, 
+    ])
+      .restartQuiz()
+      .takeQuiz('cat', [
+      {rating:3, answer: 'Sometimes, if I\'m feeling smart or confident.'}, 
+      {rating:4, answer: 'I keep things tidy, and if something gets messy I can clean it up.'},
+      {rating:5, answer: 'I LOVE SNUGGLES!'}, 
+    ])  
+  })
 })

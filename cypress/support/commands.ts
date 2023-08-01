@@ -40,6 +40,8 @@ declare namespace Cypress {
     navigate(button:string, url:string): Chainable<JQuery<HTMLElement>>
     chooseRange(range:number, answer:string): Chainable<JQuery<HTMLElement>>
     clickButton(button:string): Chainable<JQuery<HTMLElement>>
+    takeQuiz(animal:string, ratings: {rating: number, answer:string}[]): Chainable<JQuery<HTMLElement>>
+    restartQuiz(): Chainable<JQuery<HTMLElement>>
   }
 }
 
@@ -59,6 +61,22 @@ Cypress.Commands.add('clickButton', (button:string) => {
   cy.get('button').contains(button).click()
 })
 
-// Cypress.Commands.add('takeQuiz', (animal:string, ratings: number[]) => {
+Cypress.Commands.add('takeQuiz', (animal:string, ratings: {rating: number, answer:string}[]) => {
+  let selectedOrder = ['last', 'last', 'first']
+  if(animal === 'cat') selectedOrder = ['first', 'first', 'last']
+  cy.get('.question').contains('Are you looking for your soul-meow or your bark-mate?')
+    .get('.pet-choice')[selectedOrder[0]]().click()
+    .get('.pet-choice')[selectedOrder[1]]().should('have.class', 'selected')
+    .get('.pet-choice')[selectedOrder[2]]().should('not.have.class', 'selected')
+    .clickButton('Next Question')
+    ratings.forEach((rating, i) => {
+      cy.chooseRange(rating.rating, rating.answer)
+      i < ratings.length - 1 ? cy.clickButton('Next Question') : cy.get('button').contains('Submit Quiz!') 
+    })
+})
 
-// })
+Cypress.Commands.add('restartQuiz', () => {
+  cy.get('.back-btn').click()
+    .get('.back-btn').click()
+    .get('.back-btn').click()
+})
