@@ -12,15 +12,6 @@
   justify-content: space-around;
 }
 
-.quiz::-webkit-scrollbar {
-  width: 12px;
-}
-
-.quiz::-webkit-scrollbar-thumb {
-  background-color: #EAE3A6;
-  border-radius: 5px;
-}
-
 .quiz-header {
   width: 100%;
   display: flex;
@@ -85,6 +76,32 @@ input[type="range"] {
 
 #marker5 {
   text-align: end;
+}
+
+.rating-answer {
+  font-weight: 600;
+  font-size: 50px;
+  letter-spacing: 0.08em;
+  background-color: #fffcfc58;
+  width: 70%;
+  height: 25%;
+  min-height: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-radius: 15px; 
+  padding: 1px 10px;
+}
+
+
+.quiz::-webkit-scrollbar {
+  width: 12px;
+}
+
+.quiz::-webkit-scrollbar-thumb {
+  background-color: #EAE3A6;
+  border-radius: 5px;
 }
 
 
