@@ -38,7 +38,31 @@
 }
 
 input[type="range"] {
-  width: 70%
+  width: 71%;
+  -webkit-appearance: none; 
+  -moz-appearance:none; 
+  appearance: none;
+  background-color: #EAE3A6;
+  border-radius: 15px;
+  height: .4em;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: .75em;
+  width: .75em;
+  background-color: rgb(233, 176, 227);;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+input[type="range"]::-moz-range-thumb {
+  -moz-appearance: none;
+  height: 1em;
+  width: 1em;
+  background-color: rgba(233, 176, 227, 0.71);;
+  border-radius: 50%;
+  cursor: pointer;
 }
 
 .range-markers {
