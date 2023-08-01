@@ -14,5 +14,20 @@ describe('template spec', () => {
       .get('.pet-choice').last().contains('bark-mate')
   })
 
+  it('should answer quiz questions for dog then go back and answer for cat', () => {
+    cy.get('.pet-choice').last().click()
+      .get('.pet-choice').last().should('have.class', 'selected')
+      .get('.pet-choice').first().should('not.have.class', 'selected')
+      .clickButton('Next Question')
+      .get('h1').contains('How loyal are you?')
+      .get('.instructions').contains('slide the rating bar to change your answer')
+      .chooseRange(1, 'I am loyal to no one.')
+      .clickButton('Next Question')
+      .chooseRange(2, 'I prefer to chill out most of the time.')
+      .clickButton('Next Question')
+      .chooseRange(5, 'I LOVE SNUGGLES!')
+      .get('button').contains('Submit Quiz!')
 
+      
+  })
 })
