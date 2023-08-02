@@ -1,31 +1,4 @@
-import { Indexable } from "../../types";
-
-interface Dog {
-  image_link: string;
-  good_with_children: number;
-  good_with_other_dogs: number;
-  shedding: number;
-  grooming: number;
-  drooling: number;
-  coat_length: number;
-  good_with_strangers: number;
-  playfulness: number;
-  protectiveness: number;
-  trainability: number;
-  energy: number;
-  barking: number;
-  min_life_expectancy: number;
-  max_life_expectancy: number;
-  max_height_male: number;
-  max_height_female: number;
-  max_weight_male: number;
-  max_weight_female: number;
-  min_height_male: number;
-  min_height_female: number;
-  min_weight_male: number;
-  min_weight_female: number;
-  name: string;
-}
+import { Indexable, Dog } from "../../types";
 
 const dogs: Dog[] = [
   {
@@ -867,30 +840,32 @@ const dogs2 = [
   }
 ]
 
-const getNames = (animals: Dog[]) => animals.map(animal => animal.name)
 
-const allDogs = [dogs, dogs2, dogs3].flatMap(dogArray => getNames(dogArray))
-
-const dogNames = allDogs.reduce((names, curr) => {
-names[curr] ? names[curr] += 1 : names[curr] = 1
-return names
-}, {} as Indexable)
-
-const highestCount = Object.values(dogNames).reduce((highest, curr) => {
-if(curr > highest) {
-  highest = curr
+export const GoldenRetriver = {
+  "image_link": "https://api-ninjas.com/images/dogs/golden_retriever.jpg",
+  "good_with_children": 5,
+  "good_with_other_dogs": 5,
+  "shedding": 4,
+  "grooming": 2,
+  "drooling": 2,
+  "coat_length": 1,
+  "good_with_strangers": 5,
+  "playfulness": 4,
+  "protectiveness": 3,
+  "trainability": 5,
+  "energy": 3,
+  "barking": 1,
+  "min_life_expectancy": 10,
+  "max_life_expectancy": 12,
+  "max_height_male": 24,
+  "max_height_female": 24,
+  "max_weight_male": 75,
+  "max_weight_female": 65,
+  "min_height_male": 23,
+  "min_height_female": 23,
+  "min_weight_male": 65,
+  "min_weight_female": 55,
+  "name": "Golden Retriever"
 }
-return highest 
-}, 0)
 
-const highCountAnimals = Object.keys(dogNames).filter(name => dogNames[name] === highestCount)
-
-const getRandomAnimal = (animals: string[]) => {
-return animals[Math.floor(Math.random() * animals.length) ] 
-}
-
-const dogsFromFetch = [dogs, dogs2, dogs3].flat()
-const randomDog = getRandomAnimal(highCountAnimals)
-const dogInfo = dogsFromFetch.find(dog => dog.name === randomDog)
-
-export {dogInfo}
+export {dogs, dogs2, dogs3}
