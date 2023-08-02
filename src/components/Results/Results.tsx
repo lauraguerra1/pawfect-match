@@ -4,10 +4,11 @@ import discard from '../../images/discard.png'
 import paw from '../../images/paw-print.png'
 import noResults from '../../images/no-results.png'
 import { Dog, Cat, Indexable, QuizAnswers } from '../../types'
-import { getNames, getRandomAnimal } from '../../helpers'
+import { getNames, getRandomAnimal, isCat, isDog } from '../../helpers'
 import { useState, useEffect } from 'react'
 import { GoldenRetriver, Abyssinian, dogs, dogs2, dogs3, cats,  cats2, cats3 } from './MockData'
 import { Link } from 'react-router-dom'
+import { getAnimalInfo } from '../../apiCalls'
 
 interface ResultsProps {
   menuOpen: boolean 
@@ -15,17 +16,37 @@ interface ResultsProps {
   quizAnswers: QuizAnswers
 }
 
+type QueryResponse =  Indexable & {
+  query1: Dog[] | Cat[],
+  query2: Dog[] | Cat[],
+  query3: Dog[] | Cat[]
+}
+
 const Results = ({menuOpen, answersReady, quizAnswers}:ResultsProps) => {
-  const {pet, query1, query2, query3} = quizAnswers
+  const {pet} = quizAnswers
   const [catInfo, setCatInfo] = useState<Cat>(Abyssinian)
   const [dogInfo, setDogInfo] = useState<Dog>(GoldenRetriver)
   const [displayResults, setDisplayResults] = useState(false)
+  const [queryResponse, setQueryResponse] = useState<QueryResponse>({query1: [], query2: [], query3: []})
 
   useEffect(() => {
+    const apiCall = async (quizAnswers: QuizAnswers) => {
+      try {
+        Object.keys(quizAnswers).forEach(async key => {
+          const query = quizAnswers[key]
+          if (query !== 'cat' && query !== 'dog') {
+            const newQRes = {...queryResponse, [queryResponse[key]]: await getAnimalInfo(`${pet}s?${query.type}=${query.answer}`)}
+            setQueryResponse(newQRes)
+          }
+        })
+      } catch(error) {
+        console.log(error)
+      }
+    }
     if(answersReady) {
-      pet === 'dog' 
-      ? getPawfectMatch(dogs, dogs2, dogs3)
-      : getPawfectMatch(cats, cats2, cats3)
+      console.log('hello', answersReady)
+      // apiCall(quizAnswers)
+      getPawfectMatch(queryResponse.query1, queryResponse.query2, queryResponse.query3)
       setDisplayResults(true)
     }
   }, [answersReady])
@@ -34,7 +55,7 @@ const Results = ({menuOpen, answersReady, quizAnswers}:ResultsProps) => {
     const pawEls = [];
    
     for(let i =0; i < rating; i++) {
-      pawEls.push(<img key={`${i}type${pet}`} className='paw-rating' src={paw} alt='paw print representing a rating point'/>)
+      pawEls.push(<img key={`${i}${type}${pet}`} className='paw-rating' src={paw} alt='paw print representing a rating point'/>)
     }
     
 
@@ -61,10 +82,12 @@ const Results = ({menuOpen, answersReady, quizAnswers}:ResultsProps) => {
     
     const randomPet = getRandomAnimal(highCountAnimals)
     const petIdentity = allPets.find(pet => pet.name === randomPet)
-    if(petIdentity && pet === 'cat') {
-      setCatInfo(petIdentity as Cat)
+
+    if(petIdentity && isCat(petIdentity)) {
+      setCatInfo(petIdentity)
     } 
-    if(petIdentity && pet === 'dog') {
+
+    if(petIdentity && isDog(petIdentity)) {
       setDogInfo(petIdentity as Dog)
     }
   }
@@ -85,10 +108,10 @@ const Results = ({menuOpen, answersReady, quizAnswers}:ResultsProps) => {
                     </>
                   : <>
                       <li className='quicksand'>Friendliness: {pawRating(catInfo.family_friendly, 'energy')}</li>
-                      <li className='quicksand'>Shedding: {pawRating(catInfo.shedding, 'shedd')}</li>
+                      <li className='quicksand'>Playfulness: {pawRating(catInfo.playfulness ? catInfo.playfulness : 2, 'shedd')}</li>
                     </>
                 }
-                <li className='quicksand'>Playfulness: {pawRating(pet === 'dog' ? dogInfo.playfulness : catInfo.playfulness ? catInfo.playfulness : 2, 'play')}</li>
+                <li className='quicksand'>Shedding: {pawRating(pet === 'dog' ? dogInfo.shedding : catInfo.shedding, 'shedd')}</li>
               </ul>
           </section>
         </article>

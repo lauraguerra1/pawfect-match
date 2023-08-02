@@ -19,7 +19,7 @@ const allQuestions = {
 
 interface QuizProps {
   menuOpen: boolean
-  updateAnswers: (answer: string, queryNumber: number) => void
+  updateAnswers: (answer: string, queryNumber: number, question?: Question) => void
   notifyReady: () => void
 }
 
@@ -58,7 +58,7 @@ const Quiz = ({menuOpen, updateAnswers, notifyReady}: QuizProps) => {
 
   const goToNextQuestion = () => {
     if(questionNumber) {
-      updateAnswers(sliderBar.rating, questionNumber)
+      updateAnswers(sliderBar.rating, questionNumber, question)
     } else {
       updateAnswers(selectedPet, questionNumber)
     }
@@ -68,7 +68,7 @@ const Quiz = ({menuOpen, updateAnswers, notifyReady}: QuizProps) => {
   const goToPrevQuestion = () => setQuestionNumber(prev => prev -1)
 
   const submitQuiz = () => {
-    updateAnswers(sliderBar.rating, questionNumber)
+    updateAnswers(sliderBar.rating, questionNumber, question)
     notifyReady()
   }
   

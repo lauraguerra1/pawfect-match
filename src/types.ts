@@ -2,11 +2,11 @@ export interface Indexable {
   [key: string]: any;
 }
 
-export type QuizAnswers = {
+export type QuizAnswers = Indexable & {
   pet: string, 
-  query1: string,
-  query2: string,
-  query3: string
+  query1: {answer: string, type: string},
+  query2: {answer: string, type: string},
+  query3: {answer: string, type: string}
 }
 
 export interface Cat {
