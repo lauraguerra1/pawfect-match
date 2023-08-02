@@ -28,7 +28,7 @@ describe('template spec', () => {
       .restartQuiz()
       .get('.pet-choice').first().contains('soul-meow').click()
       .clickButton('Next Question')  
-      .get('.question').contains('How often do you solve problems on your own?')
+      .get('.question').contains('How often do you like to be around other people?')
       .clickButton('Next Question') 
       .get('.question').contains('How clean are you?')
       .clickButton('Next Question')
@@ -43,7 +43,7 @@ describe('template spec', () => {
     ])
       .restartQuiz()
       .takeQuiz('cat', [
-      {rating:3, answer: 'Sometimes, if I\'m feeling smart or confident.'}, 
+      {rating:3, answer: 'Sometimes. I\'m not a hermit, but I\'m no party animal either.'}, 
       {rating:4, answer: 'I keep things tidy, and if something gets messy I can clean it up.'},
       {rating:5, answer: 'I LOVE SNUGGLES!'}, 
     ])  

@@ -17,14 +17,14 @@ const dogOrCat: Question = {
 
 const catQuestions: Question[] = [
   {  
-    question: 'How often do you solve problems on your own? ',
+    question: 'How often do you like to be around other people?',
     query: 'intelligence',
     answers: [
-      {answer: 'Never, I appreciate all the help I can get!', value: '1'},
-      {answer: 'Once in a while.', value: '2'},
-      {answer: 'Sometimes, if I\'m feeling smart or confident.', value: '3'},
-      {answer: 'Most of the time, but I\'m not afraid to ask for help when I need it.', value: '4'},
-      {answer: 'Every day, all day!', value: '5'}
+      {answer: 'Never. Leave me alone!', value: '1'},
+      {answer: 'I don\'t mind being around other people, but I\'d rather be alone.', value: '2'},
+      {answer: 'Sometimes. I\'m not a hermit, but I\'m no party animal either.', value: '3'},
+      {answer: 'Most of the time, but I\'ll take me alone time when I need it.', value: '4'},
+      {answer: 'Every day, all day! I\'m a social butterfly.', value: '5'}
     ]
   },
   {  
