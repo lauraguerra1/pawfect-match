@@ -79,16 +79,17 @@ li::marker {
 }
 
 .no-results {
-  width: 100%;
+  max-width: 90%;
   height: 80vh;
   display: flex; 
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin: auto;
 }
 
 .no-results > img {
-  width: 60%;
+  max-height: 70vh;
 }
 .quiz-button {
   margin: 5%;
