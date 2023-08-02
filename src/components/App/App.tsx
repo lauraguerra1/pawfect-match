@@ -1,10 +1,11 @@
-import { Routes, Route, Link } from 'react-router-dom';
-import LandingPage from '../LandingPage/LandingPage';
+import './App.css';
 import NavBar from '../NavBar/NavBar';
 import Menu from '../Menu/Menu'
+import LandingPage from '../LandingPage/LandingPage';
 import Quiz from '../Quiz/Quiz'
-import './App.css';
+import Results from '../Results/Results'
 import { useState, useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
 
 type QuizAnswers = {
   pet: string, 
@@ -48,7 +49,7 @@ const App = () => {
       <Routes>
         <Route path='/' element={<LandingPage menuOpen={menuOpen}/>}/>
         <Route path='/quiz' element={<Quiz updateAnswers={updateAnswers} notifyReady={notifyReady}/>} />
-      
+        <Route path='/results' element={<Results />} />
       </Routes>
     </main>
   );

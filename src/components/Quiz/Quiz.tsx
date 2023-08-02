@@ -5,6 +5,7 @@ import kitty from '../../images/kitty.png'
 import puppy from '../../images/puppy.png'
 import back from '../../images/back.png'
 import { Indexable } from '../../types'
+import { Link } from 'react-router-dom'
 
 const images = {
   'cat': kitty,
@@ -108,7 +109,7 @@ const Quiz = ({updateAnswers, notifyReady}: QuizProps) => {
         </div>
       }
       {questionNumber < 3 && <button onClick={goToNextQuestion} className='next-btn'>Next Question</button>}
-      {questionNumber === 3 && <button onClick={submitQuiz} className='next-btn'>Submit Quiz!</button>}
+      {questionNumber === 3 && <Link className='next-btn results-link' to='/results' onClick={submitQuiz}>Submit Quiz!</Link>}
     </section>
   )
 }

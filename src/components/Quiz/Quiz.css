@@ -169,6 +169,13 @@ input[type="range"]::-moz-range-thumb {
   cursor: pointer;
 }
 
+.results-link {
+  display: flex; 
+  justify-content: center;
+  color: black;
+  text-decoration: none;
+}
+
 .quiz::-webkit-scrollbar {
   width: 12px;
 }
