@@ -216,4 +216,8 @@ input[type="range"]::-moz-range-thumb {
     font-size: 40px;
   }
 
+  .question {
+    font-size: 45px;
+  }
+
 }

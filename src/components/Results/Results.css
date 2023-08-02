@@ -15,6 +15,7 @@
   flex-direction: column;
   justify-content: center; 
   align-items: center;
+  margin: auto;
 }
 
 .animal-details {
@@ -26,6 +27,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin: auto;
 }
 
 .animal-details > h2 {
@@ -63,6 +65,7 @@ li::marker {
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  margin: auto;
 }
 
 .paw-rating {
@@ -72,6 +75,7 @@ li::marker {
 .animal-image {
   border-radius: 25px;
   max-height: 500px;
+  margin: auto;
 }
 
 .no-results {
@@ -94,7 +98,16 @@ li::marker {
   .results-page {
     flex-direction: column;
     align-items: stretch;
+    justify-content: flex-start;
     height: auto;
+    width: 100%;
+    max-height: 90vh;
+    margin: auto;
+    overflow-y: auto;
+  }
+
+  .result-info {
+    margin: 0;
   }
 
   .animal-image {
