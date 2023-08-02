@@ -6,7 +6,8 @@
 }
 
 .result-title {
-  margin: 0
+  margin: 0;
+  margin-bottom: 5%;
 }
 
 .result-info {
@@ -61,6 +62,15 @@ li::marker {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
+}
+
+.paw-rating {
+  width: 30px;
+}
+
+.animal-image {
+  border-radius: 25px;
 }
 
 @media screen and (max-width: 1505px) {
@@ -96,8 +106,21 @@ li::marker {
   }
 }
 
-@media screen and(max-width: 600px) {
+@media screen and (max-width: 675px) {
   .quicksand {
-    font-size: 20px;
+    font-size: 25px;
+  }
+
+  .result-title {
+    font-size: 50px;
+  }
+
+  .animal-image {
+    width: 90%;
+    max-width: none;
+  }
+
+  .animal-details {
+    width: 90%;
   }
 }

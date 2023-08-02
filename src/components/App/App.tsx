@@ -48,8 +48,8 @@ const App = () => {
       {menuOpen? <Menu openOrClose={openOrClose}/> : <NavBar openOrClose={openOrClose}/>}
       <Routes>
         <Route path='/' element={<LandingPage menuOpen={menuOpen}/>}/>
-        <Route path='/quiz' element={<Quiz updateAnswers={updateAnswers} notifyReady={notifyReady}/>} />
-        <Route path='/results' element={<Results />} />
+        <Route path='/quiz' element={<Quiz menuOpen={menuOpen} updateAnswers={updateAnswers} notifyReady={notifyReady}/>} />
+        <Route path='/results' element={<Results menuOpen={menuOpen}/>} />
       </Routes>
     </main>
   );

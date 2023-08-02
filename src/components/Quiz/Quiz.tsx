@@ -18,11 +18,12 @@ const allQuestions = {
 }
 
 interface QuizProps {
+  menuOpen: boolean
   updateAnswers: (answer: string, queryNumber: number) => void
   notifyReady: () => void
 }
 
-const Quiz = ({updateAnswers, notifyReady}: QuizProps) => {
+const Quiz = ({menuOpen, updateAnswers, notifyReady}: QuizProps) => {
   const [selectedPet, setSelectedPet] = useState('cat')
   const [question, setQuestion] = useState<Question>(dogOrCat)
   const [sliderBar, setSliderBar] = useState<{visible: boolean, rating: string}>({visible: false, rating: ''})
@@ -81,7 +82,7 @@ const Quiz = ({updateAnswers, notifyReady}: QuizProps) => {
   })
 
   return (
-    <section className='quiz'>
+    <section className={menuOpen ? 'hidden' : 'quiz'}>
       {questionNumber > 0 && <button onClick={goToPrevQuestion} className='back-btn'><img src={back} alt='back button' /></button>}
       <header className='quiz-header'>
         <h1 className='question header-child'>{question.question}</h1>
