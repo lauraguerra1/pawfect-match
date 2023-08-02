@@ -16,7 +16,10 @@ export interface Cat {
   family_friendly: number;
   shedding: number;
   general_health: number;
-  playfulness: number;
+  meowing?: number, 
+  intelligence?: number, 
+  playfulness?: number;
+  stranger_friendly?: number,
   children_friendly: number;
   grooming: number;
   other_pets_friendly: number;
