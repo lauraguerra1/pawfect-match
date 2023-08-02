@@ -189,7 +189,7 @@ input[type="range"]::-moz-range-thumb {
 @media screen and (max-width: 1100px) {
   .quiz {
     width: 80vw;
-    height: 90vw;
+    height: 90vh;
     padding-bottom: 15px;
   }
 
@@ -216,7 +216,4 @@ input[type="range"]::-moz-range-thumb {
     font-size: 40px;
   }
 
-  .quiz {
-    height: 100vh;
-  }
 }

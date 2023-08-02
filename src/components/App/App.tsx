@@ -49,7 +49,7 @@ const App = () => {
       <Routes>
         <Route path='/' element={<LandingPage menuOpen={menuOpen}/>}/>
         <Route path='/quiz' element={<Quiz menuOpen={menuOpen} updateAnswers={updateAnswers} notifyReady={notifyReady}/>} />
-        <Route path='/results' element={<Results menuOpen={menuOpen}/>} />
+        <Route path='/results' element={<Results answersReady={answersReady} menuOpen={menuOpen}/>} />
       </Routes>
     </main>
   );
