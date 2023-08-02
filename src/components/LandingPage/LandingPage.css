@@ -6,6 +6,7 @@
 
 .dog-and-cat {
   width: 30%;
+  max-width: 800px;
 }
 
 .landing-btn {
