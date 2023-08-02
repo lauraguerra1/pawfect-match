@@ -1,6 +1,6 @@
-import { Dog } from "./types"
+import { Dog, Cat } from "./types"
 
-const getNames = (animals: Dog[]) => animals.map(animal => animal.name)
+const getNames = (animals: Dog[] | Cat[]) => animals.map(animal => animal.name)
 
 
 const getRandomAnimal = (animals: string[]) => {

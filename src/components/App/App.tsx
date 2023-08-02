@@ -6,13 +6,7 @@ import Quiz from '../Quiz/Quiz'
 import Results from '../Results/Results'
 import { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
-
-type QuizAnswers = {
-  pet: string, 
-  query1: string,
-  query2: string,
-  query3: string
-}
+import { QuizAnswers } from '../../types';
 
 const App = () => {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -49,7 +43,7 @@ const App = () => {
       <Routes>
         <Route path='/' element={<LandingPage menuOpen={menuOpen}/>}/>
         <Route path='/quiz' element={<Quiz menuOpen={menuOpen} updateAnswers={updateAnswers} notifyReady={notifyReady}/>} />
-        <Route path='/results' element={<Results answersReady={answersReady} menuOpen={menuOpen}/>} />
+        <Route path='/results' element={<Results answersReady={answersReady} quizAnswers={quizAnswers} menuOpen={menuOpen}/>} />
       </Routes>
     </main>
   );

@@ -71,6 +71,7 @@ li::marker {
 
 .animal-image {
   border-radius: 25px;
+  max-height: 500px;
 }
 
 .no-results {
