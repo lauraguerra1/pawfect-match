@@ -91,8 +91,23 @@ li::marker {
 .no-results > img {
   max-height: 70vh;
 }
+
 .quiz-button {
   margin: 5%;
+}
+
+.loading-container {
+  height: 90vh;
+  width: 100vw;
+  display: flex; 
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.loading {
+  margin: 0;
+  max-width: 25%;
+  border-radius: 50%;
 }
 
 @media screen and (max-width: 1505px) {
@@ -141,6 +156,10 @@ li::marker {
   .no-results > img {
     width: 80%;
   }
+
+  .loading {
+    max-width: 40%;
+  }
 }
 
 @media screen and (max-width: 675px) {
@@ -163,5 +182,13 @@ li::marker {
 
   .no-results > img {
     width: 100%;
+  }
+
+  .loading {
+    max-width: 50%;
+  }
+
+  .paw-rating {
+    width: 25px;
   }
 }

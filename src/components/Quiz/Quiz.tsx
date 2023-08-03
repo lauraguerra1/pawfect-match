@@ -35,6 +35,7 @@ const Quiz = ({menuOpen, updateAnswers, notifyReady}: QuizProps) => {
     const ratingAnswer = question.answers.find(answer => answer.value === sliderBar.rating)
     if(ratingAnswer) setRatingAnswer(ratingAnswer.answer)
   }, [sliderBar])
+  
   const updateSlider = (value:string) => {
     setSliderBar({visible: true, rating: value})
   }
@@ -74,7 +75,7 @@ const Quiz = ({menuOpen, updateAnswers, notifyReady}: QuizProps) => {
   
   const animalEls = question.answers.map(answer => {
     return (
-    <section key={answer.value} className={selectedPet === answer.value ? 'selected pet-choice' : 'pet-choice'} onClick={() => setSelectedPet(answer.value)}>
+    <section key={answer.value} className={selectedPet === answer.value ? 'selected pet-choice' : 'pet-choice'} onClick={() => setSelectedPet(answer.value)} onDoubleClick={goToNextQuestion}>
       <img src={(images as Indexable)[answer.value]} alt={`${answer.value}`}/>
       <p>{answer.answer}</p>
     </section>

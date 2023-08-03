@@ -37,6 +37,16 @@ const App = () => {
 
   const updateError = (error: Error | null) => setError(error)
 
+  const clearAnswers = () => {
+    setAnswersReady(false)
+    setQuizAnswers({
+      pet: '', 
+      query1: {answer: '', type: ''},
+      query2: {answer: '', type: ''},
+      query3: {answer: '', type: ''}
+    })
+  }
+ 
   return (
     <main>
       {error && <p>{error.message}</p>}
@@ -44,7 +54,7 @@ const App = () => {
         <Routes>
           <Route path='/' element={<LandingPage menuOpen={menuOpen}/>}/>
           <Route path='/quiz' element={<Quiz menuOpen={menuOpen} updateAnswers={updateAnswers} notifyReady={notifyReady}/>} />
-          <Route path='/results' element={answersReady ? <Results quizAnswers={quizAnswers} menuOpen={menuOpen} updateError={updateError}/> : <NoResults />} />
+          <Route path='/results' element={answersReady ? <Results quizAnswers={quizAnswers} menuOpen={menuOpen} updateError={updateError} clearAnswers={clearAnswers}/> : <NoResults />} />
         </Routes>
     </main>
   );

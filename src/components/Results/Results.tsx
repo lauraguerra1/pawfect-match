@@ -7,13 +7,14 @@ import { Dog, Cat, Indexable, QuizAnswers } from '../../types'
 import { getNames, getRandomAnimal, isCat, isDog } from '../../helpers'
 import { useState, useEffect } from 'react'
 import { GoldenRetriver, Abyssinian, dogs, dogs2, dogs3, cats,  cats2, cats3 } from './MockData'
-import { Link } from 'react-router-dom'
+import loadingAnimation from '../../images/loading.gif'
 import { getAnimalInfo } from '../../apiCalls'
 
 interface ResultsProps {
   menuOpen: boolean 
   quizAnswers: QuizAnswers
   updateError: (error: Error | null) => void
+  clearAnswers: () => void
 }
 
 type QueryResponse =  Indexable & {
@@ -22,7 +23,7 @@ type QueryResponse =  Indexable & {
   query3: Dog[] | Cat[]
 }
 
-const Results = ({menuOpen, quizAnswers, updateError}:ResultsProps) => {
+const Results = ({menuOpen, quizAnswers, updateError, clearAnswers}:ResultsProps) => {
   const {pet} = quizAnswers
   const [catInfo, setCatInfo] = useState<Cat>(Abyssinian)
   const [dogInfo, setDogInfo] = useState<Dog>(GoldenRetriver)
@@ -50,7 +51,10 @@ const Results = ({menuOpen, quizAnswers, updateError}:ResultsProps) => {
     }
 
     apiCall(quizAnswers)
-    return () => updateError(null)
+    return () => {
+      updateError(null)
+      clearAnswers()
+    }
   }, [])
 
   useEffect(() => {
@@ -101,7 +105,12 @@ const Results = ({menuOpen, quizAnswers, updateError}:ResultsProps) => {
   }
 
   if(loading) {
-    return <p>Loading...</p>
+    return (
+    <div className='loading-container'>
+      <img className='loading' src={loadingAnimation} alt='loading animation with a blue paw'/>
+      <h1>Loading...</h1>
+    </div>
+    )
   } else {
     return (
       <section className={menuOpen ? 'hidden' : 'results-page'}>
