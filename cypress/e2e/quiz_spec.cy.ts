@@ -55,7 +55,6 @@ describe('quiz spec', () => {
     .get('.next-btn').contains('Submit Quiz!').click()
     .url().should('include', '/results')
     .wait(['@dog1', '@dog2', '@dog3']).then((interception) => {
-
       cy.get('.animal-image[alt="Australian Cattle Dog"]')
         .get('h1').contains('We found your bark-mate')
         .get('p.quicksand').contains('Scores on a scale of 1 - 5')
@@ -75,7 +74,15 @@ describe('quiz spec', () => {
     .get('.next-btn').contains('Submit Quiz!').click()
     .url().should('include', '/results')
     .wait(['@cat4', '@cat5', '@cat6']).then((interception) => {
-
+      cy.get('.animal-image[alt="American Shorthair"]')
+        .get('h1').contains('We found your soul-meow')
+        .get('p.quicksand').contains('Scores on a scale of 1 - 5')
+        .get('li').first().contains('Friendliness: ')
+        .get('li').first().children().should('have.length', 3)
+        .get('li').next().contains('Playfulness: ').children().should('have.length', 2)
+        .get('li').last().contains('Shedding: ').children().should('have.length', 3)
+        .get('button').contains('Add to My Pets').find('img[alt="save button"]')
+        .get('button').contains('Discard & Try Again').find('img[alt="discard button"]')
     })
   })
 
