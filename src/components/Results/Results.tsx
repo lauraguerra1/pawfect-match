@@ -12,8 +12,8 @@ import { getAnimalInfo } from '../../apiCalls'
 
 interface ResultsProps {
   menuOpen: boolean 
-  answersReady: boolean
   quizAnswers: QuizAnswers
+  updateError: (error: Error | null) => void
 }
 
 type QueryResponse =  Indexable & {
@@ -22,34 +22,43 @@ type QueryResponse =  Indexable & {
   query3: Dog[] | Cat[]
 }
 
-const Results = ({menuOpen, answersReady, quizAnswers}:ResultsProps) => {
+const Results = ({menuOpen, quizAnswers, updateError}:ResultsProps) => {
   const {pet} = quizAnswers
   const [catInfo, setCatInfo] = useState<Cat>(Abyssinian)
   const [dogInfo, setDogInfo] = useState<Dog>(GoldenRetriver)
-  const [displayResults, setDisplayResults] = useState(false)
   const [queryResponse, setQueryResponse] = useState<QueryResponse>({query1: [], query2: [], query3: []})
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     const apiCall = async (quizAnswers: QuizAnswers) => {
+      setLoading(true)
       try {
         Object.keys(quizAnswers).forEach(async key => {
           const query = quizAnswers[key]
           if (query !== 'cat' && query !== 'dog') {
-            const newQRes = {...queryResponse, [queryResponse[key]]: await getAnimalInfo(`${pet}s?${query.type}=${query.answer}`)}
-            setQueryResponse(newQRes)
+            const animalInfo = await getAnimalInfo(`${pet}s?${query.type}=${query.answer}`)
+            setQueryResponse(prev => {
+              const newRes = {...prev, [key]: animalInfo}
+              return newRes
+            })
           }
         })
       } catch(error) {
-        console.log(error)
+        setLoading(false)
+        if(error instanceof Error) updateError(error)
       }
     }
-    if(answersReady) {
-      console.log('hello', answersReady)
-      // apiCall(quizAnswers)
+
+    apiCall(quizAnswers)
+    return () => updateError(null)
+  }, [])
+
+  useEffect(() => {
+    if(queryResponse.query1.length && queryResponse.query2.length && queryResponse.query3.length) {
+      setLoading(false)
       getPawfectMatch(queryResponse.query1, queryResponse.query2, queryResponse.query3)
-      setDisplayResults(true)
     }
-  }, [answersReady])
+  }, [queryResponse])
 
   const pawRating = (rating: number, type: string) => {
     const pawEls = [];
@@ -58,7 +67,6 @@ const Results = ({menuOpen, answersReady, quizAnswers}:ResultsProps) => {
       pawEls.push(<img key={`${i}${type}${pet}`} className='paw-rating' src={paw} alt='paw print representing a rating point'/>)
     }
     
-
     return pawEls
   }
 
@@ -88,10 +96,13 @@ const Results = ({menuOpen, answersReady, quizAnswers}:ResultsProps) => {
     } 
 
     if(petIdentity && isDog(petIdentity)) {
-      setDogInfo(petIdentity as Dog)
+      setDogInfo(petIdentity)
     }
   }
-  if(displayResults) {
+
+  if(loading) {
+    return <p>Loading...</p>
+  } else {
     return (
       <section className={menuOpen ? 'hidden' : 'results-page'}>
         <img className='animal-image' src={pet === 'dog' ? dogInfo.image_link : catInfo.image_link} alt={pet === 'dog' ? dogInfo.name : catInfo.name}/>
@@ -120,14 +131,7 @@ const Results = ({menuOpen, answersReady, quizAnswers}:ResultsProps) => {
           <button><img src={discard} alt='discard button'/>Discard & Try Again</button>
         </section>
       </section>
-    )
-  } else {
-    return (
-      <div className='no-results'>
-        <img src={noResults} alt='kitten and puppy holding up a sign that says "Whoops! Please take the quiz to find your pawfect match!"'/>
-        <Link to='/quiz' className='link landing-btn quiz-button'>Start the quiz!</Link>    
-      </div>
-    )
+    )        
   }
 }
 
