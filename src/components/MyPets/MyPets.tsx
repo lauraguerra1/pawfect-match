@@ -35,7 +35,7 @@ const MyPets = ({savedPets, deletePet}: MyPetsProps) => {
 
   return (
     <>
-      <div style={{maxHeight: '90vh', overflow: 'auto'}}>
+      <div >
         <section className={modalOpen ? 'blur pawfect-matches' : 'pawfect-matches'}>
           <h1>Your Pawfect Matches</h1>
           <section className='saved-pets'>
@@ -46,7 +46,7 @@ const MyPets = ({savedPets, deletePet}: MyPetsProps) => {
       <dialog className='dialog' >
       <div className='dialog-flex'>
         <p>Are you sure you want to remove the {petToDelete?.name} from your pets?</p>
-        <div>
+        <div className='dialog-buttons'>
           <button onClick={closeModal}>CANCEL</button>
           <button 
             onClick={() => {
