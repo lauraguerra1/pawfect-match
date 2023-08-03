@@ -1,0 +1,27 @@
+.pawfect-matches {
+  background-color: #fcf89286;
+  width: 75%;
+  height: 80vh;
+  margin: auto;
+  margin-top: 2%;
+  border-radius: 25px;
+  padding: 20px;
+}
+
+.saved-pets {
+  max-height: 80%;
+  overflow-y: auto;
+  display: flex; 
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.saved-pets::-webkit-scrollbar {
+  width: 10px;
+}
+
+.saved-pets::-webkit-scrollbar-thumb {
+  background-color: #71C6C1;
+  border-radius: 25px;
+  width: 8px
+}

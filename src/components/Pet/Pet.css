@@ -1,0 +1,28 @@
+.pet {
+  width: 400px;
+  height: 380px;
+  background-color: rgba(255, 255, 255, 0.597);
+  border-radius: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  padding-top: 10px;
+}
+
+.pet h2 {
+  margin-bottom: 0;
+}
+
+.pet > img {
+  max-width: 80%;
+  max-height: 60%;
+}
+
+.bookmark-button {
+  background-color: #00000000;
+  border: none;
+  margin-right: 5px;
+  align-self: flex-end;
+}
