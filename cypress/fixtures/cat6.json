@@ -1,0 +1,41 @@
+[
+  {
+    "length": "12 to 15 inches",
+    "origin": "United States",
+    "image_link": "https://api-ninjas.com/images/cats/american_shorthair.jpg",
+    "family_friendly": 3,
+    "shedding": 3,
+    "general_health": 4,
+    "playfulness": 2,
+    "children_friendly": 4,
+    "stranger_friendly": 4,
+    "grooming": 4,
+    "intelligence": 4,
+    "other_pets_friendly": 3,
+    "min_weight": 7.0,
+    "max_weight": 12.0,
+    "min_life_expectancy": 15.0,
+    "max_life_expectancy": 20.0,
+    "name": "American Shorthair"
+  },
+  {
+    "length": "22 to 25 inches, not including tail",
+    "origin": "Great Britain",
+    "image_link": "https://api-ninjas.com/images/cats/british_shorthair.jpg",
+    "family_friendly": 3,
+    "shedding": 3,
+    "general_health": 4,
+    "playfulness": 2,
+    "meowing": 4,
+    "children_friendly": 4,
+    "stranger_friendly": 4,
+    "grooming": 4,
+    "intelligence": 3,
+    "other_pets_friendly": 5,
+    "min_weight": 7.0,
+    "max_weight": 17.0,
+    "min_life_expectancy": 12.0,
+    "max_life_expectancy": 17.0,
+    "name": "British Shorthair"
+  }
+]

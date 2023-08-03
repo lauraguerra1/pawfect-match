@@ -1,36 +1,29 @@
-import { Routes, Route, Link } from 'react-router-dom';
-import LandingPage from '../LandingPage/LandingPage';
+import './App.css';
 import NavBar from '../NavBar/NavBar';
 import Menu from '../Menu/Menu'
+import LandingPage from '../LandingPage/LandingPage';
 import Quiz from '../Quiz/Quiz'
-import './App.css';
+import Results from '../Results/Results'
 import { useState, useEffect } from 'react';
-
-type QuizAnswers = {
-  pet: string, 
-  query1: string,
-  query2: string,
-  query3: string
-}
+import { Routes, Route } from 'react-router-dom';
+import { QuizAnswers } from '../../types';
+import { Question } from '../Quiz/QuizData';
+import NoResults from '../NoResults/NoResults';
 
 const App = () => {
+  const [error, setError] = useState<Error | null>(null)
   const [menuOpen, setMenuOpen] = useState(false)
   const [answersReady, setAnswersReady] = useState(false)
   const [quizAnswers, setQuizAnswers] = useState<QuizAnswers>({
     pet: '', 
-    query1: '',
-    query2: '',
-    query3: ''
+    query1: {answer: '', type: ''},
+    query2: {answer: '', type: ''},
+    query3: {answer: '', type: ''}
   })
 
-  useEffect(() => {
-    console.log(quizAnswers)
-
-  }, [quizAnswers])
-
-  const updateAnswers = (answer: string, queryNumber: number) => {
+  const updateAnswers = (answer: string, queryNumber: number, question?: Question) => {
     if(queryNumber) {
-      setQuizAnswers({...quizAnswers, [`query${queryNumber}`]: answer})
+      setQuizAnswers({...quizAnswers, [`query${queryNumber}`]: {answer: answer, type: question?.query}})
     } else {
       setQuizAnswers({...quizAnswers, pet: answer})
     }
@@ -42,14 +35,27 @@ const App = () => {
     setMenuOpen(command)
   }
 
+  const updateError = (error: Error | null) => setError(error)
+
+  const clearAnswers = () => {
+    setAnswersReady(false)
+    setQuizAnswers({
+      pet: '', 
+      query1: {answer: '', type: ''},
+      query2: {answer: '', type: ''},
+      query3: {answer: '', type: ''}
+    })
+  }
+ 
   return (
     <main>
+      {error && <p>{error.message}</p>}
       {menuOpen? <Menu openOrClose={openOrClose}/> : <NavBar openOrClose={openOrClose}/>}
-      <Routes>
-        <Route path='/' element={<LandingPage menuOpen={menuOpen}/>}/>
-        <Route path='/quiz' element={<Quiz updateAnswers={updateAnswers} notifyReady={notifyReady}/>} />
-      
-      </Routes>
+        <Routes>
+          <Route path='/' element={<LandingPage menuOpen={menuOpen}/>}/>
+          <Route path='/quiz' element={<Quiz menuOpen={menuOpen} updateAnswers={updateAnswers} notifyReady={notifyReady}/>} />
+          <Route path='/results' element={answersReady ? <Results quizAnswers={quizAnswers} menuOpen={menuOpen} updateError={updateError} clearAnswers={clearAnswers}/> : <NoResults />} />
+        </Routes>
     </main>
   );
 }

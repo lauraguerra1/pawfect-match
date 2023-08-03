@@ -5,23 +5,25 @@ import kitty from '../../images/kitty.png'
 import puppy from '../../images/puppy.png'
 import back from '../../images/back.png'
 import { Indexable } from '../../types'
+import { Link } from 'react-router-dom'
 
-const images = {
+const images: Indexable & {cat: string, dog: string} = {
   'cat': kitty,
   'dog': puppy
 }
 
-const allQuestions = {
+const allQuestions: Indexable & {cat: Question[], dog: Question[]}= {
   'cat': catQuestions,
   'dog': dogQuestions
 }
 
 interface QuizProps {
-  updateAnswers: (answer: string, queryNumber: number) => void
+  menuOpen: boolean
+  updateAnswers: (answer: string, queryNumber: number, question?: Question) => void
   notifyReady: () => void
 }
 
-const Quiz = ({updateAnswers, notifyReady}: QuizProps) => {
+const Quiz = ({menuOpen, updateAnswers, notifyReady}: QuizProps) => {
   const [selectedPet, setSelectedPet] = useState('cat')
   const [question, setQuestion] = useState<Question>(dogOrCat)
   const [sliderBar, setSliderBar] = useState<{visible: boolean, rating: string}>({visible: false, rating: ''})
@@ -33,6 +35,7 @@ const Quiz = ({updateAnswers, notifyReady}: QuizProps) => {
     const ratingAnswer = question.answers.find(answer => answer.value === sliderBar.rating)
     if(ratingAnswer) setRatingAnswer(ratingAnswer.answer)
   }, [sliderBar])
+
   const updateSlider = (value:string) => {
     setSliderBar({visible: true, rating: value})
   }
@@ -47,7 +50,7 @@ const Quiz = ({updateAnswers, notifyReady}: QuizProps) => {
 
   useEffect(() => {
     if(questionNumber) {
-      setQuestion((allQuestions as Indexable)[selectedPet][questionNumber -1])
+      setQuestion(allQuestions[selectedPet][questionNumber -1])
     } else {
       setQuestion(dogOrCat)
     }
@@ -56,7 +59,7 @@ const Quiz = ({updateAnswers, notifyReady}: QuizProps) => {
 
   const goToNextQuestion = () => {
     if(questionNumber) {
-      updateAnswers(sliderBar.rating, questionNumber)
+      updateAnswers(sliderBar.rating, questionNumber, question)
     } else {
       updateAnswers(selectedPet, questionNumber)
     }
@@ -66,21 +69,21 @@ const Quiz = ({updateAnswers, notifyReady}: QuizProps) => {
   const goToPrevQuestion = () => setQuestionNumber(prev => prev -1)
 
   const submitQuiz = () => {
-    updateAnswers(sliderBar.rating, questionNumber)
+    updateAnswers(sliderBar.rating, questionNumber, question)
     notifyReady()
   }
   
   const animalEls = question.answers.map(answer => {
     return (
-    <section key={answer.value} className={selectedPet === answer.value ? 'selected pet-choice' : 'pet-choice'} onClick={() => setSelectedPet(answer.value)}>
-      <img src={(images as Indexable)[answer.value]} alt={`${answer.value}`}/>
+    <section key={answer.value} className={selectedPet === answer.value ? 'selected pet-choice' : 'pet-choice'} onClick={() => setSelectedPet(answer.value)} onDoubleClick={goToNextQuestion}>
+      <img src={images[answer.value]} alt={`${answer.value}`}/>
       <p>{answer.answer}</p>
     </section>
     )
   })
 
   return (
-    <section className='quiz'>
+    <section className={menuOpen ? 'hidden' : 'quiz'}>
       {questionNumber > 0 && <button onClick={goToPrevQuestion} className='back-btn'><img src={back} alt='back button' /></button>}
       <header className='quiz-header'>
         <h1 className='question header-child'>{question.question}</h1>
@@ -108,7 +111,7 @@ const Quiz = ({updateAnswers, notifyReady}: QuizProps) => {
         </div>
       }
       {questionNumber < 3 && <button onClick={goToNextQuestion} className='next-btn'>Next Question</button>}
-      {questionNumber === 3 && <button onClick={submitQuiz} className='next-btn'>Submit Quiz!</button>}
+      {questionNumber === 3 && <Link className='next-btn results-link' to='/results' onClick={submitQuiz}>Submit Quiz!</Link>}
     </section>
   )
 }

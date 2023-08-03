@@ -1,4 +1,4 @@
-describe('template spec', () => {
+describe('landing page spec', () => {
 
   it('should have a homepage and navigate via the navbar', () => {
     cy.visit('http://localhost:3000')

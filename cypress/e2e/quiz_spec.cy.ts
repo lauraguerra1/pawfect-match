@@ -1,6 +1,12 @@
 import {dogQuestions, catQuestions} from '../../src/components/Quiz/QuizData'
 
-describe('template spec', () => {
+describe('quiz spec', () => {
+  const stubSingleFetch = (endpoints:string, fixture:string) => {
+    cy.intercept('GET', `https://api.api-ninjas.com/v1/${endpoints}`, {
+      statusCode: 200, 
+      fixture: fixture
+    }).as(fixture)
+  }
   beforeEach(() => {
     cy.visit('http://localhost:3000/quiz')
   })
@@ -22,31 +28,62 @@ describe('template spec', () => {
       .get('.question').contains('How loyal are you?')
       .get('.instructions').contains('slide the rating bar to change your answer')
       .clickButton('Next Question')
-      .get('.question').contains('What is your energy level?')
+      .get('.question').contains('How clean are you?')
       .clickButton('Next Question')
-      .get('.question').contains('How much do you like to cuddle?')
+      .get('.question').contains('What is your energy level?')
       .restartQuiz()
       .get('.pet-choice').first().contains('soul-meow').click()
       .clickButton('Next Question')  
-      .get('.question').contains('How often do you solve problems on your own?')
+      .get('.question').contains('How often do you like to be around other people?')
       .clickButton('Next Question') 
       .get('.question').contains('How clean are you?')
       .clickButton('Next Question')
       .get('.question').contains('How much do you like to cuddle?')
   })
 
-  it('should answer quiz questions for dog then go back and answer for cat', () => {
+  it.only('should take quiz for dog then go back and take quiz for cat', () => {
+    const queries = ['protectiveness', 'shedding', 'energy', 'family_friendly', 'shedding', 'playfulness']
+    queries.forEach((query, i) => {
+      const animal = i <= 2 ? 'dog' : 'cat'
+      stubSingleFetch(`${animal}s?${query}=${i > 2 ? i : i+1}`, `${animal}${i+1}`)
+    })
     cy.takeQuiz('dog', [
       {rating:1, answer: 'I am loyal to no one.'}, 
-      {rating:2, answer: 'I prefer to chill out most of the time.'},
-      {rating:3, answer: 'It depends on the moment!'}, 
+      {rating:2, answer: 'I only clean up when I have guests.'},
+      {rating:3, answer: 'I can be energetic, but I also like to relax.'}, 
     ])
-      .restartQuiz()
-      .takeQuiz('cat', [
-      {rating:3, answer: 'Sometimes, if I\'m feeling smart or confident.'}, 
+    .get('.next-btn').contains('Submit Quiz!').click()
+    .url().should('include', '/results')
+    .wait(['@dog1', '@dog2', '@dog3']).then((interception) => {
+      cy.get('.animal-image[alt="Australian Cattle Dog"]')
+        .get('h1').contains('We found your bark-mate')
+        .get('p.quicksand').contains('Scores on a scale of 1 - 5')
+        .get('li').first().contains('Protectiveness: ')
+        .get('li').first().children().should('have.length', 4)
+        .get('li').next().contains('Energy: ').children().should('have.length', 5)
+        .get('li').last().contains('Shedding: ').children().should('have.length', 3)
+        .get('button').contains('Add to My Pets').find('img[alt="save button"]')
+        .get('button').contains('Discard & Try Again').find('img[alt="discard button"]')
+    })
+    .get('[href="/quiz"]').click()
+    .takeQuiz('cat', [
+      {rating:3, answer: 'Sometimes. I\'m not a hermit, but I\'m no party animal either.'}, 
       {rating:4, answer: 'I keep things tidy, and if something gets messy I can clean it up.'},
       {rating:5, answer: 'I LOVE SNUGGLES!'}, 
     ])  
+    .get('.next-btn').contains('Submit Quiz!').click()
+    .url().should('include', '/results')
+    .wait(['@cat4', '@cat5', '@cat6']).then((interception) => {
+      cy.get('.animal-image[alt="American Shorthair"]')
+        .get('h1').contains('We found your soul-meow')
+        .get('p.quicksand').contains('Scores on a scale of 1 - 5')
+        .get('li').first().contains('Friendliness: ')
+        .get('li').first().children().should('have.length', 3)
+        .get('li').next().contains('Playfulness: ').children().should('have.length', 2)
+        .get('li').last().contains('Shedding: ').children().should('have.length', 3)
+        .get('button').contains('Add to My Pets').find('img[alt="save button"]')
+        .get('button').contains('Discard & Try Again').find('img[alt="discard button"]')
+    })
   })
 
   it('should answer quiz questions with all possible answers for dog and cat', () => {

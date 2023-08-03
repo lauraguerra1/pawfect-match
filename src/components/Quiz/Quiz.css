@@ -169,6 +169,13 @@ input[type="range"]::-moz-range-thumb {
   cursor: pointer;
 }
 
+.results-link {
+  display: flex; 
+  justify-content: center;
+  color: black;
+  text-decoration: none;
+}
+
 .quiz::-webkit-scrollbar {
   width: 12px;
 }
@@ -182,7 +189,7 @@ input[type="range"]::-moz-range-thumb {
 @media screen and (max-width: 1100px) {
   .quiz {
     width: 80vw;
-    height: 90vw;
+    height: 90vh;
     padding-bottom: 15px;
   }
 
@@ -209,7 +216,8 @@ input[type="range"]::-moz-range-thumb {
     font-size: 40px;
   }
 
-  .quiz {
-    height: 100vh;
+  .question {
+    font-size: 45px;
   }
+
 }

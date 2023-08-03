@@ -1,0 +1,39 @@
+[
+  {
+    "length": "12 to 15 inches",
+    "origin": "United States",
+    "image_link": "https://api-ninjas.com/images/cats/american_shorthair.jpg",
+    "family_friendly": 3,
+    "shedding": 3,
+    "general_health": 4,
+    "playfulness": 2,
+    "children_friendly": 4,
+    "stranger_friendly": 4,
+    "grooming": 4,
+    "intelligence": 4,
+    "other_pets_friendly": 3,
+    "min_weight": 7.0,
+    "max_weight": 12.0,
+    "min_life_expectancy": 15.0,
+    "max_life_expectancy": 20.0,
+    "name": "American Shorthair"
+  },
+  {
+    "length": "12 to 16 inches",
+    "origin": "Southeast Asia",
+    "image_link": "https://api-ninjas.com/images/cats/abyssinian.jpg",
+    "family_friendly": 3,
+    "shedding": 3,
+    "general_health": 2,
+    "playfulness": 5,
+    "children_friendly": 5,
+    "grooming": 3,
+    "intelligence": 5,
+    "other_pets_friendly": 5,
+    "min_weight": 6.0,
+    "max_weight": 10.0,
+    "min_life_expectancy": 9.0,
+    "max_life_expectancy": 15.0,
+    "name": "Abyssinian"
+  }
+]
