@@ -1,6 +1,9 @@
 import {dogQuestions, catQuestions} from '../../src/components/Quiz/QuizData'
 
 describe('template spec', () => {
+  const stubSingleFetch = (endpoint, alias) => {
+    cy.intercept('GET', 'https://api.api-ninja')
+  }
   beforeEach(() => {
     cy.visit('http://localhost:3000/quiz')
   })
