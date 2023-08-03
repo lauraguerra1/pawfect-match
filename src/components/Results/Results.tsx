@@ -78,10 +78,10 @@ const Results = ({menuOpen, quizAnswers, updateError, clearAnswers}:ResultsProps
     const allPetNames = [query1, query2, query3].flatMap(petArray => getNames(petArray))
     const allPets = [query1, query2, query3].flat()
 
-    const nameCount = allPetNames.reduce((names, curr) => {
+    const nameCount = allPetNames.reduce((names: Record<string, number>, curr) => {
     names[curr] ? names[curr] += 1 : names[curr] = 1
     return names
-    }, {} as Indexable)
+    }, {})
     
     const highestCount = Object.values(nameCount).reduce((highest, curr) => {
     if(curr > highest) {

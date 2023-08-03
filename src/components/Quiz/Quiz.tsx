@@ -7,12 +7,12 @@ import back from '../../images/back.png'
 import { Indexable } from '../../types'
 import { Link } from 'react-router-dom'
 
-const images = {
+const images: Indexable & {cat: string, dog: string} = {
   'cat': kitty,
   'dog': puppy
 }
 
-const allQuestions = {
+const allQuestions: Indexable & {cat: Question[], dog: Question[]}= {
   'cat': catQuestions,
   'dog': dogQuestions
 }
@@ -35,7 +35,7 @@ const Quiz = ({menuOpen, updateAnswers, notifyReady}: QuizProps) => {
     const ratingAnswer = question.answers.find(answer => answer.value === sliderBar.rating)
     if(ratingAnswer) setRatingAnswer(ratingAnswer.answer)
   }, [sliderBar])
-  
+
   const updateSlider = (value:string) => {
     setSliderBar({visible: true, rating: value})
   }
@@ -50,7 +50,7 @@ const Quiz = ({menuOpen, updateAnswers, notifyReady}: QuizProps) => {
 
   useEffect(() => {
     if(questionNumber) {
-      setQuestion((allQuestions as Indexable)[selectedPet][questionNumber -1])
+      setQuestion(allQuestions[selectedPet][questionNumber -1])
     } else {
       setQuestion(dogOrCat)
     }
@@ -76,7 +76,7 @@ const Quiz = ({menuOpen, updateAnswers, notifyReady}: QuizProps) => {
   const animalEls = question.answers.map(answer => {
     return (
     <section key={answer.value} className={selectedPet === answer.value ? 'selected pet-choice' : 'pet-choice'} onClick={() => setSelectedPet(answer.value)} onDoubleClick={goToNextQuestion}>
-      <img src={(images as Indexable)[answer.value]} alt={`${answer.value}`}/>
+      <img src={images[answer.value]} alt={`${answer.value}`}/>
       <p>{answer.answer}</p>
     </section>
     )
