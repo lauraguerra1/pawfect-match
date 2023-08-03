@@ -27,7 +27,7 @@ const Results = ({menuOpen, quizAnswers, updateError, clearAnswers}:ResultsProps
   const [catInfo, setCatInfo] = useState<Cat>(Abyssinian)
   const [dogInfo, setDogInfo] = useState<Dog>(GoldenRetriver)
   const [queryResponse, setQueryResponse] = useState<QueryResponse>({query1: [], query2: [], query3: []})
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const apiCall = async (quizAnswers: QuizAnswers) => {
@@ -78,15 +78,15 @@ const Results = ({menuOpen, quizAnswers, updateError, clearAnswers}:ResultsProps
     const allPets = [query1, query2, query3].flat()
 
     const nameCount = allPetNames.reduce((names: Record<string, number>, curr) => {
-    names[curr] ? names[curr] += 1 : names[curr] = 1
-    return names
+      names[curr] ? names[curr] += 1 : names[curr] = 1
+      return names
     }, {})
     
     const highestCount = Object.values(nameCount).reduce((highest, curr) => {
-    if(curr > highest) {
-      highest = curr
-    }
-    return highest 
+      if(curr > highest) {
+        highest = curr
+      }
+      return highest 
     }, 0)
     
     const highCountAnimals = Object.keys(nameCount).filter(name => nameCount[name] === highestCount)

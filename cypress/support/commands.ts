@@ -46,7 +46,7 @@ Cypress.Commands.add('takeQuiz', (animal, ratings) => {
     .clickButton('Next Question')
     ratings.forEach((rating, i) => {
       cy.chooseRange(rating.rating, rating.answer)
-      i < ratings.length - 1 ? cy.clickButton('Next Question') : cy.get('.next-btn').contains('Submit Quiz!')
+      i < ratings.length - 1 ? cy.clickButton('Next Question') : cy.get('.next-btn').contains('Submit Quiz!').should('be.visible')
     })
 })
 
@@ -61,6 +61,6 @@ Cypress.Commands.add('testAllAnswers', (questions) => {
       question.answers.forEach((answer) => {
         cy.chooseRange(parseInt(answer.value), answer.answer)
       })
-    i < 2 ? cy.clickButton('Next Question') : cy.get('.next-btn').contains('Submit Quiz!')
+    i < 2 ? cy.clickButton('Next Question') : cy.get('.next-btn').contains('Submit Quiz!').should('be.visible')
   })
 })
