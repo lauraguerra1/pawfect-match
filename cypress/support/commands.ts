@@ -17,6 +17,7 @@ declare namespace Cypress {
     takeQuiz(animal:string, ratings: {rating: number, answer:string}[]): Chainable<JQuery<HTMLElement>>
     restartQuiz(): Chainable<JQuery<HTMLElement>>
     testAllAnswers(questions: Question[]): Chainable<JQuery<HTMLElement>>
+    stubSingleFetch(endpoints:string, fixture:string, status:number):Chainable<JQuery<HTMLElement>>
   }
 }
 
@@ -63,4 +64,11 @@ Cypress.Commands.add('testAllAnswers', (questions) => {
       })
     i < 2 ? cy.clickButton('Next Question') : cy.get('.next-btn').contains('Submit Quiz!').should('be.visible')
   })
+})
+
+Cypress.Commands.add('stubSingleFetch', (endpoints, fixture, status) => {
+  cy.intercept('GET', `https://api.api-ninjas.com/v1/${endpoints}`, {
+    statusCode: status, 
+    fixture: fixture
+  }).as(fixture)
 })

@@ -1,12 +1,6 @@
 import {dogQuestions, catQuestions} from '../../src/components/Quiz/QuizData'
 
 describe('quiz spec', () => {
-  const stubSingleFetch = (endpoints:string, fixture:string) => {
-    cy.intercept('GET', `https://api.api-ninjas.com/v1/${endpoints}`, {
-      statusCode: 200, 
-      fixture: fixture
-    }).as(fixture)
-  }
   beforeEach(() => {
     cy.visit('http://localhost:3000/quiz')
   })
@@ -41,11 +35,11 @@ describe('quiz spec', () => {
       .get('.question').contains('How much do you like to cuddle?')
   })
 
-  it.only('should take quiz for dog then go back and take quiz for cat', () => {
+  it('should take quiz for dog then go back and take quiz for cat', () => {
     const queries = ['protectiveness', 'shedding', 'energy', 'family_friendly', 'shedding', 'playfulness']
     queries.forEach((query, i) => {
       const animal = i <= 2 ? 'dog' : 'cat'
-      stubSingleFetch(`${animal}s?${query}=${i > 2 ? i : i+1}`, `${animal}${i+1}`)
+      cy.stubSingleFetch(`${animal}s?${query}=${i > 2 ? i : i+1}`, `${animal}${i+1}`, 200)
     })
     cy.takeQuiz('dog', [
       {rating:1, answer: 'I am loyal to no one.'}, 
@@ -62,10 +56,9 @@ describe('quiz spec', () => {
         .get('li').first().children().should('have.length', 4)
         .get('li').next().contains('Energy: ').children().should('have.length', 5)
         .get('li').last().contains('Shedding: ').children().should('have.length', 3)
-        .get('button').contains('Add to My Pets').find('img[alt="save button"]')
-        .get('button').contains('Discard & Try Again').find('img[alt="discard button"]')
+        .get('a').contains('Add to My Pets').find('img[alt="save button"]')
+        .get('a').contains('Discard & Try Again').find('img[alt="discard button"]').click()
     })
-    .get('[href="/quiz"]').click()
     .takeQuiz('cat', [
       {rating:3, answer: 'Sometimes. I\'m not a hermit, but I\'m no party animal either.'}, 
       {rating:4, answer: 'I keep things tidy, and if something gets messy I can clean it up.'},
@@ -81,8 +74,8 @@ describe('quiz spec', () => {
         .get('li').first().children().should('have.length', 3)
         .get('li').next().contains('Playfulness: ').children().should('have.length', 2)
         .get('li').last().contains('Shedding: ').children().should('have.length', 3)
-        .get('button').contains('Add to My Pets').find('img[alt="save button"]')
-        .get('button').contains('Discard & Try Again').find('img[alt="discard button"]')
+        .get('a').contains('Add to My Pets').find('img[alt="save button"]')
+        .get('a').contains('Discard & Try Again').find('img[alt="discard button"]')
     })
   })
 

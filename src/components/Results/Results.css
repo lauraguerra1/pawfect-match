@@ -10,6 +10,37 @@
   margin-bottom: 5%;
 }
 
+.already-saved-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.heading-piece {
+  text-align: center;
+}
+
+.already-saved-container p  {
+  font-size: 45px;
+}
+
+.already-saved-container .link {
+  padding: 0px 5px;
+  margin: 5px 10px;
+  background-color: rgb(192, 211, 228);
+  border-radius: 15px;
+  width: 200px;
+  display: block;
+  text-align: center;
+  cursor: pointer;
+}
+
+.top-link-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 .result-info {
   display: flex;
   flex-direction: column;
@@ -57,7 +88,7 @@ li::marker {
   color: grey;
 }
 
-.choice-buttons button {
+.choice-buttons a {
   background: none;
   border: none;
   display: flex;
@@ -65,7 +96,8 @@ li::marker {
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  margin: auto;
+  margin: 10px;
+  text-align: center;
 }
 
 .paw-rating {
@@ -108,6 +140,31 @@ li::marker {
   margin: 0;
   max-width: 25%;
   border-radius: 50%;
+}
+
+.heading-top {
+  animation: celebrate 2s linear infinite;
+}
+
+@keyframes celebrate {
+  0% {
+    color: rgb(244, 40, 173);
+  }
+
+  25% {
+    color: rgb(231, 80, 231);
+  }
+
+  50% {
+    color: rgb(171, 43, 226)
+  }
+
+  75% {
+    color: rgb(115, 0, 255);
+  }
+  100% {
+    color: rgb(234, 0, 255);
+  }
 }
 
 @media screen and (min-width: 2000px) {
