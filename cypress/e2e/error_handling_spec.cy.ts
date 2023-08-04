@@ -35,5 +35,9 @@ describe('error handling spec', () => {
       {rating:3, answer: 'I can be energetic, but I also like to relax.'}, 
     ])
     .get('.next-btn').contains('Submit Quiz!').click()
+    .wait(['@dog1', '@dog2', '@dog3']).then((interception) => {
+      cy.get('img[alt="cat and dog rolling around on the floor"]').should('be.visible')
+        .get('h1').contains('Whoops! Error 400 - Please try again!')
+    })
   })
 })

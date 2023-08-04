@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom'
 import { GoldenRetriver, Abyssinian } from './BackupResults'
 import loadingAnimation from '../../images/loading.gif'
 import { getAnimalInfo } from '../../apiCalls'
+import ErrorPage from '../ErrorPage/ErrorPage'
 
 interface ResultsProps {
   error: Error | null
@@ -120,16 +121,14 @@ const Results = ({error, menuOpen, quizAnswers, updateError, clearAnswers, saveP
   }
 
   const checkIfSaved = (animal: Cat | Dog) => savedPets.find(pet => pet.name === animal.name) ? true : false 
-  if(error) {
-    return <p>there is an error</p>
-  }else if(loading) {
+  if(loading && error === null) {
     return (
     <div className='loading-container'>
       <img className='loading' src={loadingAnimation} alt='loading animation with a blue paw'/>
       <h1>Loading...</h1>
     </div>
     )
-  } else {
+  } else if(error === null) {
     return (
         <section className={menuOpen ? 'hidden' : 'results-page'}>
         {petAlreadySaved && 

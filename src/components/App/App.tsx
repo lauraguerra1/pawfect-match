@@ -12,6 +12,7 @@ import { Question } from '../Quiz/QuizData';
 import {Dog, Cat} from '../../types'
 import { Abyssinian, GoldenRetriver } from '../Results/BackupResults';
 import EmptyState from '../EmptyState/EmptyState';
+import ErrorPage from '../ErrorPage/ErrorPage';
 
 const App = () => {
   const [error, setError] = useState<Error | null>(null)
@@ -73,7 +74,7 @@ const App = () => {
   return (
     <main>
       {menuOpen? <Menu openOrClose={openOrClose}/> : <NavBar openOrClose={openOrClose}/>}
-      {error && <p>{error.message}</p> }
+      {error && <ErrorPage menuOpen={menuOpen} error={error} /> }
         <Routes>
           <Route path='/' element={<LandingPage menuOpen={menuOpen}/>}/>
           <Route path='/quiz' element={<Quiz menuOpen={menuOpen} updateAnswers={updateAnswers} notifyReady={notifyReady}/>} />
