@@ -32,6 +32,7 @@
   width: 200px;
   display: block;
   text-align: center;
+  cursor: pointer;
 }
 
 .top-link-container {

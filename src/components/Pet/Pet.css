@@ -26,4 +26,5 @@
   border: none;
   margin-right: 5px;
   align-self: flex-end;
+  cursor: pointer;
 }

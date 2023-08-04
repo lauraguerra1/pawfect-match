@@ -68,6 +68,7 @@
   border: 3px solid #e8dc91;
   margin: 0px 10px;
   width: 150px;
+  cursor: pointer;
 }
 
 .dialog-flex {
