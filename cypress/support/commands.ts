@@ -95,3 +95,10 @@ Cypress.Commands.add('testError', (allError, status, num) => {
       .get('h1').contains(`Whoops! Error ${status} - Please try again!`)
   })
 })
+
+Cypress.Commands.add('checkBadRoute', (route) => {
+  cy.visit(`http://localhost:3000${route}nonsense`)
+  .get('img[alt="kitten and puppy holding up a sign that says Nothing to see here... Please go back!"]').should('be.visible')
+  .get('a').contains('Take me Home').click()
+  .url().should('eq', 'http://localhost:3000/')
+})
