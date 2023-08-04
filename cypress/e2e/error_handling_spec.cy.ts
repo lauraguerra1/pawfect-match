@@ -22,22 +22,14 @@ describe('error handling spec', () => {
       .url().should('eq', 'http://localhost:3000/quiz')
   })
 
-  it('should display an error message even if only one  request fails', () => {
-    cy.visit('http://localhost:3000/quiz')
-    const queries = ['protectiveness', 'shedding', 'energy']
-    queries.forEach((query, i) => {
-      const status = i === 0 ? 400 : 200
-      cy.stubSingleFetch(`dogs?${query}=${i+1}`, `dog${i+1}`, status)
-    })
-    cy.takeQuiz('dog', [
-      {rating:1, answer: 'I am loyal to no one.'}, 
-      {rating:2, answer: 'I only clean up when I have guests.'},
-      {rating:3, answer: 'I can be energetic, but I also like to relax.'}, 
-    ])
-    .get('.next-btn').contains('Submit Quiz!').click()
-    .wait(['@dog1', '@dog2', '@dog3']).then((interception) => {
-      cy.get('img[alt="cat and dog rolling around on the floor"]').should('be.visible')
-        .get('h1').contains('Whoops! Error 400 - Please try again!')
-    })
+  it('should display an error message', () => {
+    cy.testError(false, 400, 0)
+    cy.testError(false, 400, 1)
+    cy.testError(false, 400, 2)
+    cy.testError(true, 400)
+    cy.testError(false, 500, 0)
+    cy.testError(false, 500, 1)
+    cy.testError(false, 500, 2)
+    cy.testError(true, 500)
   })
 })
