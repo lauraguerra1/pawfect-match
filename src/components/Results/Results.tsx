@@ -29,7 +29,7 @@ const Results = ({menuOpen, quizAnswers, updateError, clearAnswers, savePet}:Res
   const [catInfo, setCatInfo] = useState<Cat>(Abyssinian)
   const [dogInfo, setDogInfo] = useState<Dog>(GoldenRetriver)
   const [queryResponse, setQueryResponse] = useState<QueryResponse>({query1: [], query2: [], query3: []})
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     const apiCall = async (quizAnswers: QuizAnswers) => {
@@ -51,7 +51,7 @@ const Results = ({menuOpen, quizAnswers, updateError, clearAnswers, savePet}:Res
       }
     }
 
-    apiCall(quizAnswers)
+    // apiCall(quizAnswers)
     return () => {
       updateError(null)
       clearAnswers()
@@ -137,8 +137,8 @@ const Results = ({menuOpen, quizAnswers, updateError, clearAnswers, savePet}:Res
           </section>
         </article>
         <section className='choice-buttons'>
-          <Link to='/saved-pets' onClick={() => savePet(pet === 'dog' ? dogInfo : catInfo)}><img src={save} alt='save button'/>Add to My Pets</Link>
-          <button><img src={discard} alt='discard button'/>Discard & Try Again</button>
+          <Link className='link' to='/saved-pets' onClick={() => savePet(pet === 'dog' ? dogInfo : catInfo)}><img src={save} alt='save button'/>Add to My Pets</Link>
+          <Link className='link' to='/quiz'><img src={discard} alt='discard button'/>Discard & Try Again</Link>
         </section>
       </section>
     )        

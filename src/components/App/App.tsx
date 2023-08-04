@@ -16,7 +16,7 @@ import { Abyssinian, GoldenRetriver } from '../Results/BackupResults';
 const App = () => {
   const [error, setError] = useState<Error | null>(null)
   const [menuOpen, setMenuOpen] = useState(false)
-  const [answersReady, setAnswersReady] = useState(false)
+  const [answersReady, setAnswersReady] = useState(true)
   const [savedPets, setSavedPets] = useState<(Dog | Cat)[]>([])
   const [quizAnswers, setQuizAnswers] = useState<QuizAnswers>({
     pet: '', 

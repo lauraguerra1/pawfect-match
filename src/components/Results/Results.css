@@ -57,7 +57,7 @@ li::marker {
   color: grey;
 }
 
-.choice-buttons button {
+.choice-buttons a {
   background: none;
   border: none;
   display: flex;
@@ -65,7 +65,8 @@ li::marker {
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  margin: auto;
+  margin: 10px;
+  text-align: center;
 }
 
 .paw-rating {
