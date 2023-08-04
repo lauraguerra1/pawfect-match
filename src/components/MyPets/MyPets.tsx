@@ -2,6 +2,7 @@ import './MyPets.css'
 import { Dog, Cat } from "../../types"
 import Pet from '../Pet/Pet'
 import { useState } from 'react'
+import empty from '../../images/empty-saved.png'
 
 interface MyPetsProps {
   savedPets: (Dog | Cat)[]
@@ -39,7 +40,12 @@ const MyPets = ({savedPets, deletePet}: MyPetsProps) => {
         <section className={modalOpen ? 'blur pawfect-matches' : 'pawfect-matches'}>
           <h1>Your Pawfect Matches</h1>
           <section className='saved-pets'>
-            {savedPetEls}
+            {savedPets.length ? savedPetEls : 
+              <div className='no-saved'>
+                <h2>No pets saved yet! Take the quiz to find a match!</h2>
+                <img src={empty} alt='cartoon cat sitting in a file box'/>
+              </div>
+            }
           </section>
         </section>
       </div>

@@ -5,6 +5,7 @@ import paw from '../../images/paw-print.png'
 import { Dog, Cat, Indexable, QuizAnswers } from '../../types'
 import { getNames, getRandomAnimal, isCat, isDog } from '../../helpers'
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { GoldenRetriver, Abyssinian } from './BackupResults'
 import loadingAnimation from '../../images/loading.gif'
 import { getAnimalInfo } from '../../apiCalls'
@@ -14,6 +15,7 @@ interface ResultsProps {
   quizAnswers: QuizAnswers
   updateError: (error: Error | null) => void
   clearAnswers: () => void
+  savePet: (pet: Dog | Cat) => void
 }
 
 type QueryResponse =  Indexable & {
@@ -22,7 +24,7 @@ type QueryResponse =  Indexable & {
   query3: Dog[] | Cat[]
 }
 
-const Results = ({menuOpen, quizAnswers, updateError, clearAnswers}:ResultsProps) => {
+const Results = ({menuOpen, quizAnswers, updateError, clearAnswers, savePet}:ResultsProps) => {
   const {pet} = quizAnswers
   const [catInfo, setCatInfo] = useState<Cat>(Abyssinian)
   const [dogInfo, setDogInfo] = useState<Dog>(GoldenRetriver)
@@ -135,7 +137,7 @@ const Results = ({menuOpen, quizAnswers, updateError, clearAnswers}:ResultsProps
           </section>
         </article>
         <section className='choice-buttons'>
-          <button><img src={save} alt='save button'/>Add to My Pets</button>
+          <Link to='/saved-pets' onClick={() => savePet(pet === 'dog' ? dogInfo : catInfo)}><img src={save} alt='save button'/>Add to My Pets</Link>
           <button><img src={discard} alt='discard button'/>Discard & Try Again</button>
         </section>
       </section>

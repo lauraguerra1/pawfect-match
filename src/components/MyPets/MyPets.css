@@ -30,6 +30,17 @@
   width: 8px
 }
 
+.no-saved {
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.no-saved h2 {
+  text-align: center;
+}
+
 
 .dialog {
   border-radius: 25px;
