@@ -18,6 +18,8 @@ declare namespace Cypress {
     restartQuiz(): Chainable<JQuery<HTMLElement>>
     testAllAnswers(questions: Question[]): Chainable<JQuery<HTMLElement>>
     stubSingleFetch(endpoints:string, fixture:string, status:number):Chainable<JQuery<HTMLElement>>
+    testError(allError: boolean, status: number, num?: number): Chainable<JQuery<HTMLElement>>
+    checkBadRoute(path: string): Chainable<JQuery<HTMLElement>>
   }
 }
 
@@ -71,4 +73,32 @@ Cypress.Commands.add('stubSingleFetch', (endpoints, fixture, status) => {
     statusCode: status, 
     fixture: fixture
   }).as(fixture)
+})
+
+Cypress.Commands.add('testError', (allError, status, num) => {
+  cy.visit('http://localhost:3000/quiz')
+  const queries = ['protectiveness', 'shedding', 'energy']
+  queries.forEach((query, i) => {
+    let statusCode: number;
+    if (!allError) statusCode = i === num ? status : 200
+    if (allError) statusCode = status
+    cy.stubSingleFetch(`dogs?${query}=${i+1}`, `dog${i+1}`, statusCode)
+  })
+  cy.takeQuiz('dog', [
+    {rating:1, answer: 'I am loyal to no one.'}, 
+    {rating:2, answer: 'I only clean up when I have guests.'},
+    {rating:3, answer: 'I can be energetic, but I also like to relax.'}, 
+  ])
+  .get('.next-btn').contains('Submit Quiz!').click()
+  .wait(['@dog1', '@dog2', '@dog3']).then((interception) => {
+    cy.get('img[alt="cat and dog rolling around on the floor"]').should('be.visible')
+      .get('h1').contains(`Whoops! Error ${status} - Please try again!`)
+  })
+})
+
+Cypress.Commands.add('checkBadRoute', (route) => {
+  cy.visit(`http://localhost:3000${route}nonsense`)
+  .get('img[alt="kitten and puppy holding up a sign that says Nothing to see here... Please go back!"]').should('be.visible')
+  .get('a').contains('Take me Home').click()
+  .url().should('eq', 'http://localhost:3000/')
 })

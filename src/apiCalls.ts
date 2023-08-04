@@ -2,7 +2,7 @@ import { Cat, Dog } from "./types"
 
 const parseError = (response: Response): Promise<Cat[] | Dog[]> => {
   if(!response.ok) {
-    throw new Error(`Error: ${response.status} - Please try again!`);
+    throw new Error(`Error ${response.status} - Please try again!`);
   }
   return response.json();
 }

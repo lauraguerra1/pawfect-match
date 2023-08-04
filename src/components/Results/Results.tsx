@@ -9,8 +9,10 @@ import { Link } from 'react-router-dom'
 import { GoldenRetriver, Abyssinian } from './BackupResults'
 import loadingAnimation from '../../images/loading.gif'
 import { getAnimalInfo } from '../../apiCalls'
+import ErrorPage from '../ErrorPage/ErrorPage'
 
 interface ResultsProps {
+  error: Error | null
   menuOpen: boolean 
   quizAnswers: QuizAnswers
   updateError: (error: Error | null) => void
@@ -25,7 +27,7 @@ type QueryResponse =  Indexable & {
   query3: Dog[] | Cat[]
 }
 
-const Results = ({menuOpen, quizAnswers, updateError, clearAnswers, savePet, savedPets}:ResultsProps) => {
+const Results = ({error, menuOpen, quizAnswers, updateError, clearAnswers, savePet, savedPets}:ResultsProps) => {
   const {pet} = quizAnswers
   const [catInfo, setCatInfo] = useState<Cat>(Abyssinian)
   const [dogInfo, setDogInfo] = useState<Dog>(GoldenRetriver)
@@ -47,21 +49,21 @@ const Results = ({menuOpen, quizAnswers, updateError, clearAnswers, savePet, sav
   useEffect(() => {
     const apiCall = async (quizAnswers: QuizAnswers) => {
       setLoading(true)
-      try {
         Object.keys(quizAnswers).forEach(async key => {
           const query = quizAnswers[key]
           if (query !== 'cat' && query !== 'dog') {
-            const animalInfo = await getAnimalInfo(`${pet}s?${query.type}=${query.answer}`)
-            setQueryResponse(prev => {
-              const newRes = {...prev, [key]: animalInfo}
-              return newRes
-            })
+            try {
+              const animalInfo = await getAnimalInfo(`${pet}s?${query.type}=${query.answer}`)
+              setQueryResponse(prev => {
+                const newRes = {...prev, [key]: animalInfo}
+                return newRes
+              })
+            }catch(error) {
+              setLoading(false)
+              if(error instanceof Error) updateError(error)
+            }
           }
         })
-      } catch(error) {
-        setLoading(false)
-        if(error instanceof Error) updateError(error)
-      }
     }
 
     apiCall(quizAnswers)
@@ -119,15 +121,14 @@ const Results = ({menuOpen, quizAnswers, updateError, clearAnswers, savePet, sav
   }
 
   const checkIfSaved = (animal: Cat | Dog) => savedPets.find(pet => pet.name === animal.name) ? true : false 
-
-  if(loading) {
+  if(loading && error === null) {
     return (
     <div className='loading-container'>
       <img className='loading' src={loadingAnimation} alt='loading animation with a blue paw'/>
       <h1>Loading...</h1>
     </div>
     )
-  } else {
+  } else if(error === null) {
     return (
         <section className={menuOpen ? 'hidden' : 'results-page'}>
         {petAlreadySaved && 

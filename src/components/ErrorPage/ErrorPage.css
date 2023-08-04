@@ -1,0 +1,16 @@
+.error-page {
+  display: flex; 
+  flex-direction: column; 
+  align-items: center;
+  height: 80vh;
+  max-width: 80vh;
+  margin: auto;
+}
+
+.error-page img {
+  max-width: 95%;
+}
+
+.error-page h1 {
+  text-align: center;
+}
