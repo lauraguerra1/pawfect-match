@@ -1,3 +1,9 @@
+.saved-page-container {
+  max-height: 100vh;
+  overflow-y: auto;
+  margin: 0px 5px;
+}
+
 .pawfect-matches {
   background-color: #fcf8926e;
   width: 75%;
@@ -20,7 +26,7 @@
   justify-content: space-evenly;
 }
 
-.saved-pets::-webkit-scrollbar {
+.saved-pets::-webkit-scrollbar, .saved-page-container::-webkit-scrollbar {
   width: 10px;
 }
 
@@ -28,6 +34,10 @@
   background-color: #71C6C1;
   border-radius: 25px;
   width: 8px
+}
+
+.saved-page-container::-webkit-scrollbar-thumb {
+  background-color: grey;
 }
 
 .no-saved {
@@ -93,8 +103,14 @@
   .dialog-buttons {
     flex-direction: column;
   }
-
+  
   .dialog-flex {
     justify-content: flex-start;
+  }
+}
+
+@media screen and (max-height: 970px) {
+  .pawfect-matches {
+    height: 95vh;
   }
 }

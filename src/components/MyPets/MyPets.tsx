@@ -36,7 +36,7 @@ const MyPets = ({savedPets, deletePet, menuOpen}: MyPetsProps) => {
   })
 
   return (
-    <div className={menuOpen ? 'hidden' : ''}>
+    <div className={menuOpen ? 'hidden' : 'saved-page-container'}>
       <div >
         <section className={modalOpen ? 'blur pawfect-matches' : 'pawfect-matches'}>
           <h1>Your Pawfect Matches</h1>
