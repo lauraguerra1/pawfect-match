@@ -30,7 +30,7 @@ const Results = ({menuOpen, quizAnswers, updateError, clearAnswers, savePet, sav
   const [catInfo, setCatInfo] = useState<Cat>(Abyssinian)
   const [dogInfo, setDogInfo] = useState<Dog>(GoldenRetriver)
   const [queryResponse, setQueryResponse] = useState<QueryResponse>({query1: [], query2: [], query3: []})
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
   const [petAlreadySaved, setPetAlreadySaved] = useState(false)
 
   useEffect(() => {
@@ -64,7 +64,7 @@ const Results = ({menuOpen, quizAnswers, updateError, clearAnswers, savePet, sav
       }
     }
 
-    // apiCall(quizAnswers)
+    apiCall(quizAnswers)
     return () => {
       updateError(null)
       clearAnswers()
@@ -129,7 +129,6 @@ const Results = ({menuOpen, quizAnswers, updateError, clearAnswers, savePet, sav
     )
   } else {
     return (
-      <>
         <section className={menuOpen ? 'hidden' : 'results-page'}>
         {petAlreadySaved && 
         <div className='already-saved-container'>
@@ -171,7 +170,6 @@ const Results = ({menuOpen, quizAnswers, updateError, clearAnswers, savePet, sav
             </section>
           }
         </section>
-      </>
     )        
   }
 }

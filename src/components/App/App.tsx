@@ -16,7 +16,7 @@ import { Abyssinian, GoldenRetriver } from '../Results/BackupResults';
 const App = () => {
   const [error, setError] = useState<Error | null>(null)
   const [menuOpen, setMenuOpen] = useState(false)
-  const [answersReady, setAnswersReady] = useState(true)
+  const [answersReady, setAnswersReady] = useState(false)
   const [savedPets, setSavedPets] = useState<(Dog | Cat)[]>([])
   const [quizAnswers, setQuizAnswers] = useState<QuizAnswers>({
     pet: '', 
@@ -77,8 +77,8 @@ const App = () => {
         <Routes>
           <Route path='/' element={<LandingPage menuOpen={menuOpen}/>}/>
           <Route path='/quiz' element={<Quiz menuOpen={menuOpen} updateAnswers={updateAnswers} notifyReady={notifyReady}/>} />
-          <Route path='/results' element={answersReady ? <Results quizAnswers={quizAnswers} menuOpen={menuOpen} updateError={updateError} clearAnswers={clearAnswers} savePet={addToSavedPets} savedPets={savedPets}/> : <NoResults />} />
-          <Route path='/saved-pets' element={<MyPets savedPets={savedPets} deletePet={removeFromSavedPets}/>}/>
+          <Route path='/results' element={answersReady ? <Results quizAnswers={quizAnswers} menuOpen={menuOpen} updateError={updateError} clearAnswers={clearAnswers} savePet={addToSavedPets} savedPets={savedPets}/> : <NoResults menuOpen={menuOpen}/>} />
+          <Route path='/saved-pets' element={<MyPets savedPets={savedPets} deletePet={removeFromSavedPets} menuOpen={menuOpen}/>}/>
         </Routes>
     </main>
   );

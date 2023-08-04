@@ -7,8 +7,9 @@ import empty from '../../images/empty-saved.png'
 interface MyPetsProps {
   savedPets: (Dog | Cat)[]
   deletePet: (oldPet: Dog | Cat) => void
+  menuOpen: boolean
 }
-const MyPets = ({savedPets, deletePet}: MyPetsProps) => {
+const MyPets = ({savedPets, deletePet, menuOpen}: MyPetsProps) => {
   const [modalOpen, setModalOpen] = useState(false)
   const [petToDelete, setPetToDelete] = useState<Cat | Dog | null>(null)
 
@@ -35,7 +36,7 @@ const MyPets = ({savedPets, deletePet}: MyPetsProps) => {
   })
 
   return (
-    <>
+    <div className={menuOpen ? 'hidden' : ''}>
       <div >
         <section className={modalOpen ? 'blur pawfect-matches' : 'pawfect-matches'}>
           <h1>Your Pawfect Matches</h1>
@@ -65,7 +66,7 @@ const MyPets = ({savedPets, deletePet}: MyPetsProps) => {
         </div>
       </div>
     </dialog>
-    </>
+    </div>
   )
 }
 
