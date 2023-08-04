@@ -16,6 +16,7 @@ interface ResultsProps {
   updateError: (error: Error | null) => void
   clearAnswers: () => void
   savePet: (pet: Dog | Cat) => void
+  savedPets: (Dog | Cat)[]
 }
 
 type QueryResponse =  Indexable & {
@@ -24,12 +25,24 @@ type QueryResponse =  Indexable & {
   query3: Dog[] | Cat[]
 }
 
-const Results = ({menuOpen, quizAnswers, updateError, clearAnswers, savePet}:ResultsProps) => {
+const Results = ({menuOpen, quizAnswers, updateError, clearAnswers, savePet, savedPets}:ResultsProps) => {
   const {pet} = quizAnswers
   const [catInfo, setCatInfo] = useState<Cat>(Abyssinian)
   const [dogInfo, setDogInfo] = useState<Dog>(GoldenRetriver)
   const [queryResponse, setQueryResponse] = useState<QueryResponse>({query1: [], query2: [], query3: []})
   const [loading, setLoading] = useState(false)
+  const [petAlreadySaved, setPetAlreadySaved] = useState(false)
+
+  useEffect(() => {
+    if(pet === 'cat') {
+      setPetAlreadySaved(checkIfSaved(catInfo))
+    } 
+
+    if(pet === 'dog') {
+      setPetAlreadySaved(checkIfSaved(dogInfo))
+    }
+
+  }, [catInfo, dogInfo])
 
   useEffect(() => {
     const apiCall = async (quizAnswers: QuizAnswers) => {
@@ -105,6 +118,8 @@ const Results = ({menuOpen, quizAnswers, updateError, clearAnswers, savePet}:Res
     }
   }
 
+  const checkIfSaved = (animal: Cat | Dog) => savedPets.find(pet => pet.name === animal.name) ? true : false 
+
   if(loading) {
     return (
     <div className='loading-container'>
@@ -114,33 +129,49 @@ const Results = ({menuOpen, quizAnswers, updateError, clearAnswers, savePet}:Res
     )
   } else {
     return (
-      <section className={menuOpen ? 'hidden' : 'results-page'}>
-        <img className='animal-image' src={pet === 'dog' ? dogInfo.image_link : catInfo.image_link} alt={pet === 'dog' ? dogInfo.name : catInfo.name}/>
-        <article className='result-info'>
-          <h1 className='result-title'>We found your {pet === 'dog' ? 'bark-mate' : 'soul-meow'}</h1>
-          <section className='animal-details'>
-              <h2>{pet === 'dog' ? dogInfo.name : catInfo.name}</h2>
-              <p className='quicksand'>Scores on a scale of 1 - 5</p>
-              <ul>
-                {pet === 'dog' 
-                  ? <>
-                      <li className='quicksand'>Protectiveness: {pawRating(dogInfo.protectiveness, 'protect')}</li>
-                      <li className='quicksand'>Energy: {pawRating(dogInfo.energy, 'energy')}</li>
-                    </>
-                  : <>
-                      <li className='quicksand'>Friendliness: {pawRating(catInfo.family_friendly, 'energy')}</li>
-                      <li className='quicksand'>Playfulness: {pawRating(catInfo.playfulness ? catInfo.playfulness : 2, 'shedd')}</li>
-                    </>
-                }
-                <li className='quicksand'>Shedding: {pawRating(pet === 'dog' ? dogInfo.shedding : catInfo.shedding, 'shedd')}</li>
-              </ul>
-          </section>
-        </article>
-        <section className='choice-buttons'>
-          <Link className='link' to='/saved-pets' onClick={() => savePet(pet === 'dog' ? dogInfo : catInfo)}><img src={save} alt='save button'/>Add to My Pets</Link>
-          <Link className='link' to='/quiz'><img src={discard} alt='discard button'/>Discard & Try Again</Link>
+      <>
+        <section className={menuOpen ? 'hidden' : 'results-page'}>
+        {petAlreadySaved && 
+        <div className='already-saved-container'>
+          <header>
+            <h1 className='heading-piece'>WOW! This match is truly pawfect!</h1>
+            <p className='heading-piece'>The {pet === 'dog' ? dogInfo.name : catInfo.name } is already in your pets and you've been matched again!</p>
+          </header>
+          <div className='top-link-container'>
+            <Link className='link' to='/saved-pets'>View My Pets</Link>
+            <Link className='link' to='/saved-pets'>Return To Quiz</Link>
+          </div>
+        </div>
+        }
+          <img className='animal-image' src={pet === 'dog' ? dogInfo.image_link : catInfo.image_link} alt={pet === 'dog' ? dogInfo.name : catInfo.name}/>
+          <article className='result-info'>
+            {!petAlreadySaved && <h1 className='result-title'>We found your {pet === 'dog' ? 'bark-mate' : 'soul-meow'}</h1>}
+            <section className='animal-details'>
+                <h2>{pet === 'dog' ? dogInfo.name : catInfo.name}</h2>
+                <p className='quicksand'>Scores on a scale of 1 - 5</p>
+                <ul>
+                  {pet === 'dog' 
+                    ? <>
+                        <li className='quicksand'>Protectiveness: {pawRating(dogInfo.protectiveness, 'protect')}</li>
+                        <li className='quicksand'>Energy: {pawRating(dogInfo.energy, 'energy')}</li>
+                      </>
+                    : <>
+                        <li className='quicksand'>Friendliness: {pawRating(catInfo.family_friendly, 'energy')}</li>
+                        <li className='quicksand'>Playfulness: {pawRating(catInfo.playfulness ? catInfo.playfulness : 2, 'shedd')}</li>
+                      </>
+                  }
+                  <li className='quicksand'>Shedding: {pawRating(pet === 'dog' ? dogInfo.shedding : catInfo.shedding, 'shedd')}</li>
+                </ul>
+            </section>
+          </article>
+          {!petAlreadySaved && 
+            <section className='choice-buttons'>
+              <Link className='link' to='/saved-pets' onClick={() => savePet(pet === 'dog' ? dogInfo : catInfo)}><img src={save} alt='save button'/>Add to My Pets</Link>
+              <Link className='link' to='/quiz'><img src={discard} alt='discard button'/>Discard & Try Again</Link>
+            </section>
+          }
         </section>
-      </section>
+      </>
     )        
   }
 }
