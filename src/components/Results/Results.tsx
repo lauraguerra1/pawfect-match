@@ -134,7 +134,7 @@ const Results = ({menuOpen, quizAnswers, updateError, clearAnswers, savePet, sav
         {petAlreadySaved && 
         <div className='already-saved-container'>
           <header>
-            <h1 className='heading-piece'>WOW! This match is truly pawfect!</h1>
+            <h1 className='heading-piece heading-top'>WOW! This match is truly pawfect!</h1>
             <p className='heading-piece'>The {pet === 'dog' ? dogInfo.name : catInfo.name } is already in your pets and you've been matched again!</p>
           </header>
           <div className='top-link-container'>

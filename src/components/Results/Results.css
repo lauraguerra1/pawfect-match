@@ -141,6 +141,31 @@ li::marker {
   border-radius: 50%;
 }
 
+.heading-top {
+  animation: celebrate 2s linear infinite;
+}
+
+@keyframes celebrate {
+  0% {
+    color: rgb(244, 40, 173);
+  }
+
+  25% {
+    color: rgb(231, 80, 231);
+  }
+
+  50% {
+    color: rgb(171, 43, 226)
+  }
+
+  75% {
+    color: rgb(115, 0, 255);
+  }
+  100% {
+    color: rgb(234, 0, 255);
+  }
+}
+
 @media screen and (min-width: 2000px) {
   .animal-image {
     max-width: 80%;
