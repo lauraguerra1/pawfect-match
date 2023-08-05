@@ -10,17 +10,18 @@ import { Routes, Route } from 'react-router-dom';
 import { QuizAnswers } from '../../types';
 import { Question } from '../Quiz/QuizData';
 import {Dog, Cat} from '../../types'
-import { Abyssinian, GoldenRetriver } from '../Results/BackupResults';
 import EmptyState from '../EmptyState/EmptyState';
 import ErrorPage from '../ErrorPage/ErrorPage';
+import PetDetails from '../PetDetails/PetDetails';
+
 
 const App = () => {
   const [error, setError] = useState<Error | null>(null)
   const [menuOpen, setMenuOpen] = useState(false)
-  const [answersReady, setAnswersReady] = useState(true)
+  const [answersReady, setAnswersReady] = useState(false)
   const [savedPets, setSavedPets] = useState<(Dog | Cat)[]>([])
   const [quizAnswers, setQuizAnswers] = useState<QuizAnswers>({
-    pet: 'dog', 
+    pet: '', 
     query1: {answer: '', type: ''},
     query2: {answer: '', type: ''},
     query3: {answer: '', type: ''}
@@ -71,7 +72,7 @@ const App = () => {
     updateSavedPets(filteredPets)
   }
 
-  const checkIfSaved = (animal: Cat | Dog) => savedPets.find(pet => pet.name === animal.name) ? true : false 
+  const checkIfSaved = (name: string) => savedPets.find(pet => pet.name === name) ? true : false 
 
   return (
     <main>
@@ -82,7 +83,8 @@ const App = () => {
           <Route path='/quiz' element={<Quiz menuOpen={menuOpen} updateAnswers={updateAnswers} notifyReady={notifyReady}/>} />
           <Route path='/results' element={answersReady ? <Results error={error} quizAnswers={quizAnswers} menuOpen={menuOpen} updateError={updateError} clearAnswers={clearAnswers} savePet={addToSavedPets} checkIfSaved={checkIfSaved}/> : <EmptyState menuOpen={menuOpen} noResults={true}/>} />
           <Route path='/saved-pets' element={<MyPets savedPets={savedPets} deletePet={removeFromSavedPets} menuOpen={menuOpen}/>}/>
-          {['', '/quiz/', '/results/', '/saved-pets/'].map(path => <Route path={`${path}*`} element={<EmptyState menuOpen={menuOpen} noResults={false}/>}/>)}
+          <Route path='/saved-pets/:name' element={<PetDetails savedPets={savedPets} menuOpen={menuOpen} checkIfSaved={checkIfSaved} deletePet={removeFromSavedPets} addPet={addToSavedPets}/>}/>
+          {['', '/quiz/', '/results/'].map(path => <Route key={path} path={`${path}*`} element={<EmptyState menuOpen={menuOpen} noResults={false}/>}/>)}
         </Routes>
     </main>
   );

@@ -18,7 +18,7 @@ interface ResultsProps {
   updateError: (error: Error | null) => void
   clearAnswers: () => void
   savePet: (pet: Dog | Cat) => void
-  checkIfSaved: (pet: Dog | Cat) => boolean
+  checkIfSaved: (name: string) => boolean
 }
 
 type QueryResponse =  Indexable & {
@@ -32,16 +32,16 @@ const Results = ({error, menuOpen, quizAnswers, updateError, clearAnswers, saveP
   const [catInfo, setCatInfo] = useState<Cat>(Abyssinian)
   const [dogInfo, setDogInfo] = useState<Dog>(GoldenRetriver)
   const [queryResponse, setQueryResponse] = useState<QueryResponse>({query1: [], query2: [], query3: []})
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
   const [petAlreadySaved, setPetAlreadySaved] = useState(false)
 
   useEffect(() => {
     if(pet === 'cat') {
-      setPetAlreadySaved(checkIfSaved(catInfo))
+      setPetAlreadySaved(checkIfSaved(catInfo.name))
     } 
 
     if(pet === 'dog') {
-      setPetAlreadySaved(checkIfSaved(dogInfo))
+      setPetAlreadySaved(checkIfSaved(dogInfo.name))
     }
 
   }, [catInfo, dogInfo])
@@ -66,7 +66,7 @@ const Results = ({error, menuOpen, quizAnswers, updateError, clearAnswers, saveP
         })
     }
 
-    // apiCall(quizAnswers)
+    apiCall(quizAnswers)
     return () => {
       updateError(null)
       clearAnswers()
