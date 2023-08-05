@@ -80,7 +80,7 @@ const App = () => {
           <Route path='/quiz' element={<Quiz menuOpen={menuOpen} updateAnswers={updateAnswers} notifyReady={notifyReady}/>} />
           <Route path='/results' element={answersReady ? <Results error={error} quizAnswers={quizAnswers} menuOpen={menuOpen} updateError={updateError} clearAnswers={clearAnswers} savePet={addToSavedPets} savedPets={savedPets}/> : <EmptyState menuOpen={menuOpen} noResults={true}/>} />
           <Route path='/saved-pets' element={<MyPets savedPets={savedPets} deletePet={removeFromSavedPets} menuOpen={menuOpen}/>}/>
-          {['', '/quiz/', '/results/', '/saved-pets/'].map(path => <Route path={`${path}*`} element={<EmptyState menuOpen={menuOpen} noResults={false}/>}/>)}
+          {['', '/quiz/', '/results/', '/saved-pets/'].map(path => <Route key={path} path={`${path}*`} element={<EmptyState menuOpen={menuOpen} noResults={false}/>}/>)}
         </Routes>
     </main>
   );
