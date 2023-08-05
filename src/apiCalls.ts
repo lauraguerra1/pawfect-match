@@ -8,13 +8,11 @@ const parseError = (response: Response): Promise<Cat[] | Dog[]> => {
 }
 
 const getAnimalInfo = async(endpoints: string) => {
-  console.log('api key', process.env.REACT_APP_API_KEY)
   const response = await fetch(`https://api.api-ninjas.com/v1/${endpoints}`, {
     headers: {
       "X-Api-Key": process.env.REACT_APP_API_KEY!
     }
   })
-  console.log('res', response)
   const data = parseError(response);
   return data;
 }
