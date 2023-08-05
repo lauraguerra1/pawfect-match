@@ -18,7 +18,7 @@ interface ResultsProps {
   updateError: (error: Error | null) => void
   clearAnswers: () => void
   savePet: (pet: Dog | Cat) => void
-  savedPets: (Dog | Cat)[]
+  checkIfSaved: (pet: Dog | Cat) => boolean
 }
 
 type QueryResponse =  Indexable & {
@@ -27,12 +27,12 @@ type QueryResponse =  Indexable & {
   query3: Dog[] | Cat[]
 }
 
-const Results = ({error, menuOpen, quizAnswers, updateError, clearAnswers, savePet, savedPets}:ResultsProps) => {
+const Results = ({error, menuOpen, quizAnswers, updateError, clearAnswers, savePet, checkIfSaved}:ResultsProps) => {
   const {pet} = quizAnswers
   const [catInfo, setCatInfo] = useState<Cat>(Abyssinian)
   const [dogInfo, setDogInfo] = useState<Dog>(GoldenRetriver)
   const [queryResponse, setQueryResponse] = useState<QueryResponse>({query1: [], query2: [], query3: []})
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
   const [petAlreadySaved, setPetAlreadySaved] = useState(false)
 
   useEffect(() => {
@@ -66,7 +66,7 @@ const Results = ({error, menuOpen, quizAnswers, updateError, clearAnswers, saveP
         })
     }
 
-    apiCall(quizAnswers)
+    // apiCall(quizAnswers)
     return () => {
       updateError(null)
       clearAnswers()
@@ -120,7 +120,6 @@ const Results = ({error, menuOpen, quizAnswers, updateError, clearAnswers, saveP
     }
   }
 
-  const checkIfSaved = (animal: Cat | Dog) => savedPets.find(pet => pet.name === animal.name) ? true : false 
   if(loading && error === null) {
     return (
     <div className='loading-container'>
@@ -130,7 +129,7 @@ const Results = ({error, menuOpen, quizAnswers, updateError, clearAnswers, saveP
     )
   } else if(error === null) {
     return (
-        <section className={menuOpen ? 'hidden' : 'results-page'}>
+        <section className={menuOpen ? 'hidden' : petAlreadySaved ? 'column-flex results-page' : 'results-page'}>
         {petAlreadySaved && 
         <div className='already-saved-container'>
           <header>
