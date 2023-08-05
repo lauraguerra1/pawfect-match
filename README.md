@@ -21,10 +21,11 @@ Pawfect Match is a fun and interactive app designed to help users find the perfe
 
 # Preview of App:
  <div align='center'> 
-  <h2>Combined Search & Filter </h2>
-  <img src="https://user-images.githubusercontent.com/121131581/257073252-13e6f52f-90c5-4965-853b-b5d25af1f909.gif" alt='gif of searching and filtering' />
-  <h2>Save & Unsave Items</h2>
-  <img src='https://user-images.githubusercontent.com/121131581/257073420-d8306b89-2c1b-4ab1-be7b-e3a8448fa741.gif' alt='gif of saving and unsaving an item'>
+  <h2>Match Making Quiz </h2>
+     <img src='https://github.com/lauraguerra1/pawfect-match/assets/121131581/dd6472fb-0883-4111-a5f7-93a124dfa8c5' alt='gif of the match making quiz'>
+  <h2>Save & Unsave Matches</h2>
+
+  <img src='https://github.com/lauraguerra1/pawfect-match/assets/121131581/baf8dfe1-3f2e-4f97-8eaf-2952690687fd' alt='gif of saving and unsaving an item'>
  </div>
 
 ## Installation Instructions:
