@@ -141,7 +141,7 @@ const Results = ({error, menuOpen, quizAnswers, updateError, clearAnswers, saveP
                 <ul>
                   {pet === 'dog' 
                     ? <>
-                  <li className='quicksand'>Protectiveness: <PawRating rating={dogInfo.protectiveness} type='protect' pet={pet} /></li>
+                        <li className='quicksand'>Protectiveness: <PawRating rating={dogInfo.protectiveness} type='protect' pet={pet} /></li>
                         <li className='quicksand'>Energy: <PawRating rating={dogInfo.energy} type='energy' pet={pet} /></li>
                       </>
                     : <>
