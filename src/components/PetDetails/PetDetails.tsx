@@ -5,62 +5,50 @@ import { useEffect, useState } from "react"
 import { isCat, isDog } from "../../helpers"
 
 interface PetDetailsProps {
-  checkIfSaved: (name: string) => boolean
   deletePet: (pet: Cat | Dog) => void
   addPet: (pet: Cat | Dog) => void
   menuOpen: boolean
-  savedPets: (Cat | Dog)[]
 }
 
-const PetDetails = ({menuOpen, checkIfSaved, deletePet, addPet, savedPets}: PetDetailsProps) => {
+const PetDetails = ({menuOpen, deletePet, addPet }: PetDetailsProps) => {
   const petName = useParams().name?.replaceAll('-', ' ')
-  const [petSaved, setPetSaved] = useState(false)
-  const [pet, setPet] = useState<Cat | Dog | null>(null)
+  const [petSaved, setPetSaved] = useState<Cat | Dog | null>(null)
 
   useEffect(() => {
-    if(petName) setPetSaved(checkIfSaved(petName))
+    const storage = localStorage.getItem('pawfectMatches')
+    if (storage) setPetSaved(JSON.parse(storage).find((animal: Cat | Dog) => animal.name === petName)) 
   }, [])
 
-  useEffect(() => {
-    if(petSaved) {
-      console.log(petName)
-      const savedPet = savedPets.find(animal => animal.name === petName)
-      setPet(savedPet ? savedPet : null)
-      console.log(pet)
-    }
-  }, [petSaved])
-
-  if(!petSaved) {
-    return <EmptyState menuOpen={menuOpen} noResults={false}/>
+  if (!petSaved) {
+    return <EmptyState menuOpen={menuOpen} noResults={false} />
   }
 
-  // console.log(pet)
+    return (
+      <section className={menuOpen ? 'hidden' : ''}>
+        <h1>{petSaved?.name}</h1>
+        <img src={petSaved?.image_link} alt={petSaved?.name} />
+        <article>
+          <h2>Your Pet's Details</h2>
+          <p>Minimum Life Expectancy: {petSaved?.min_life_expectancy}</p>
+          <p>Maximum Life Expectancy: {petSaved?.max_life_expectancy}</p>
+          <p>Shedding Amount: {petSaved?.shedding}</p>
+          <p>Playfulness: {petSaved?.playfulness ? petSaved.playfulness : 'unknown'}</p>
+          {isCat(petSaved) && 
+            <>
+              <p>General Health: {petSaved.general_health}</p>
+              <p>Meowing: {petSaved.meowing ? petSaved.meowing : 'unknown'}</p>
+            </>
+          }
+          {isDog(petSaved) && 
+            <>
+              <p>Energy: {petSaved.energy}</p>
+              <p>Barking: {petSaved.barking}</p>
+            </>
+          }
+        </article>
+      </section>
+    )
 
-  return (
-    <section className={menuOpen ? 'hidden' : ''}>
-      <h1>{pet?.name}</h1>
-      <img src={pet?.image_link} alt={pet?.name}/>
-      <article>
-        <h2>Your Pet's Details</h2>
-        <p>Minimum Life Expectancy: {pet?.min_life_expectancy}</p>
-        <p>Maximum Life Expectancy: {pet?.max_life_expectancy}</p>
-        <p>Shedding Amount: {pet?.shedding}</p>
-        <p>Playfullness: {pet?.playfulness ? pet.playfulness : 'unknown'}</p>
-        {/* {isCat(pet) && 
-          <>
-            <p>General Health: {pet.general_health}</p>
-            <p>Meowing: {pet.meowing ? pet.meowing : 'unknown'}</p>
-          </>
-        }
-        {isDog(pet) && 
-          <>
-            <p>Energy: {pet.energy}</p>
-            <p>Barking: {pet.barking}</p>
-          </>
-        } */}
-      </article>
-    </section>
-  )
 }
 
 export default PetDetails
