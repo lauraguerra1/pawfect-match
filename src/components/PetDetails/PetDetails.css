@@ -50,6 +50,20 @@
   text-align: center;
 }
 
-/* .pet-details-article article ul {
-  align-items: baseline;
-} */
+.pet-details-article article p {
+  text-align: center;
+  margin: 0px 0px 10px 0px;
+}
+
+@media screen and (min-width: 1400px){
+  .pet-details-page {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .pet-details-article {
+    align-self: flex-end;
+    margin-bottom: 0;
+    max-width: 800px
+  }
+}

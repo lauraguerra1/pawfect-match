@@ -38,21 +38,22 @@ const PetDetails = ({menuOpen, deletePet, addPet }: PetDetailsProps) => {
       <div className='pet-details-article'>
         <article>
           <h2>Your Pet's Details</h2>
+          <p className='quicksand'>Scores on a scale of 1 - 5</p>
           <ul>
-            <li>Minimum Life Expectancy: {petSaved.min_life_expectancy} YEARS</li>
-            <li>Maximum Life Expectancy: {petSaved.max_life_expectancy} YEARS</li>
-            <li>Shedding Amount: <PawRating rating={petSaved.shedding} type='shedding' pet={petSaved.name} /></li>
-            <li>Playfulness: <PawRating rating={petSaved.playfulness ? petSaved.playfulness : 2} type='playfulness' pet={petSaved.name} /></li>
+            <li className='quicksand'>Minimum Life Expectancy: {petSaved.min_life_expectancy} YEARS</li>
+            <li className='quicksand'>Maximum Life Expectancy: {petSaved.max_life_expectancy} YEARS</li>
+            <li className='quicksand'>Shedding Amount: <PawRating rating={petSaved.shedding} type='shedding' pet={petSaved.name} /></li>
+            <li className='quicksand'>Playfulness: <PawRating rating={petSaved.playfulness ? petSaved.playfulness : 2} type='playfulness' pet={petSaved.name} /></li>
             {isCat(petSaved) && 
               <>
-                <li>General Health: <PawRating rating={petSaved.general_health} type='general_health' pet={petSaved.name} /></li>
-                <li>Meowing: <PawRating rating={petSaved.meowing ? petSaved.meowing : 2} type='meowing' pet={petSaved.name} /></li>
+                <li className='quicksand'>General Health: <PawRating rating={petSaved.general_health} type='general_health' pet={petSaved.name} /></li>
+                <li className='quicksand'>Meowing: <PawRating rating={petSaved.meowing ? petSaved.meowing : 2} type='meowing' pet={petSaved.name} /></li>
               </>
             }
             {isDog(petSaved) && 
               <>
-                <li>Energy: <PawRating rating={petSaved.energy} type='energy' pet={petSaved.name} /></li>
-                <li>Barking: <PawRating rating={petSaved.barking} type='barking' pet={petSaved.name} /></li>
+                <li className='quicksand'>Energy: <PawRating rating={petSaved.energy} type='energy' pet={petSaved.name} /></li>
+                <li className='quicksand'>Barking: <PawRating rating={petSaved.barking} type='barking' pet={petSaved.name} /></li>
               </>
             }
           </ul>
