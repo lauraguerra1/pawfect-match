@@ -83,8 +83,7 @@ const App = () => {
           <Route path='/quiz' element={<Quiz menuOpen={menuOpen} updateAnswers={updateAnswers} notifyReady={notifyReady}/>} />
           <Route path='/results' element={answersReady ? <Results error={error} quizAnswers={quizAnswers} menuOpen={menuOpen} updateError={updateError} clearAnswers={clearAnswers} savePet={addToSavedPets} checkIfSaved={checkIfSaved}/> : <EmptyState menuOpen={menuOpen} noResults={true}/>} />
           <Route path='/saved-pets' element={<MyPets savedPets={savedPets} deletePet={removeFromSavedPets} menuOpen={menuOpen}/>}/>
-          <Route path='/saved-pets/:name' element={<PetDetails savedPets={savedPets} menuOpen={menuOpen} checkIfSaved={checkIfSaved} deletePet={removeFromSavedPets} addPet={addToSavedPets}/>}/>
-          {['', '/quiz/', '/results/'].map(path => <Route key={path} path={`${path}*`} element={<EmptyState menuOpen={menuOpen} noResults={false}/>}/>)}
+          {['', '/quiz/', '/results/', '/saved-pets/'].map(path => <Route key={path} path={`${path}*`} element={<EmptyState menuOpen={menuOpen} noResults={false}/>}/>)}
         </Routes>
     </main>
   );
