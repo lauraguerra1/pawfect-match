@@ -1,7 +1,6 @@
 import './Results.css'
 import save from '../../images/save.png'
 import discard from '../../images/discard.png'
-import paw from '../../images/paw-print.png'
 import { Dog, Cat, Indexable, QuizAnswers } from '../../types'
 import { getNames, getRandomAnimal, isCat, isDog } from '../../helpers'
 import { useState, useEffect } from 'react'
@@ -10,6 +9,7 @@ import { GoldenRetriver, Abyssinian } from './BackupResults'
 import loadingAnimation from '../../images/loading.gif'
 import { getAnimalInfo } from '../../apiCalls'
 import ErrorPage from '../ErrorPage/ErrorPage'
+import PawRating from '../PawRating/PawRating'
 
 interface ResultsProps {
   error: Error | null
@@ -80,16 +80,6 @@ const Results = ({error, menuOpen, quizAnswers, updateError, clearAnswers, saveP
     }
   }, [queryResponse])
 
-  const pawRating = (rating: number, type: string) => {
-    const pawEls = [];
-   
-    for(let i =0; i < rating; i++) {
-      pawEls.push(<img key={`${i}${type}${pet}`} className='paw-rating' src={paw} alt='paw print representing a rating point'/>)
-    }
-    
-    return pawEls
-  }
-
   const getPawfectMatch = (query1: Dog[] | Cat[], query2: Dog[] | Cat[], query3: Dog[] | Cat[]) => {
     const allPetNames = [query1, query2, query3].flatMap(petArray => getNames(petArray))
     const allPets = [query1, query2, query3].flat()
@@ -151,15 +141,15 @@ const Results = ({error, menuOpen, quizAnswers, updateError, clearAnswers, saveP
                 <ul>
                   {pet === 'dog' 
                     ? <>
-                        <li className='quicksand'>Protectiveness: {pawRating(dogInfo.protectiveness, 'protect')}</li>
-                        <li className='quicksand'>Energy: {pawRating(dogInfo.energy, 'energy')}</li>
+                  <li className='quicksand'>Protectiveness: <PawRating rating={dogInfo.protectiveness} type='protect' pet={pet} /></li>
+                        <li className='quicksand'>Energy: <PawRating rating={dogInfo.energy} type='energy' pet={pet} /></li>
                       </>
                     : <>
-                        <li className='quicksand'>Friendliness: {pawRating(catInfo.family_friendly, 'energy')}</li>
-                        <li className='quicksand'>Playfulness: {pawRating(catInfo.playfulness ? catInfo.playfulness : 2, 'shedd')}</li>
+                        <li className='quicksand'>Friendliness: <PawRating rating={catInfo.family_friendly} type='family_friendly' pet={pet} /></li>
+                        <li className='quicksand'>Playfulness: <PawRating rating={catInfo.playfulness ? catInfo.playfulness : 2} type='playfulness' pet={pet} /></li>
                       </>
                   }
-                  <li className='quicksand'>Shedding: {pawRating(pet === 'dog' ? dogInfo.shedding : catInfo.shedding, 'shedd')}</li>
+                  <li className='quicksand'>Shedding: <PawRating rating={pet === 'dog' ? dogInfo.shedding : catInfo.shedding} type='shedding' pet={pet} /></li>
                 </ul>
             </section>
           </article>
