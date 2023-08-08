@@ -21,10 +21,10 @@ const App = () => {
   const [answersReady, setAnswersReady] = useState(false)
   const [savedPets, setSavedPets] = useState<(Dog | Cat)[]>([])
   const [quizAnswers, setQuizAnswers] = useState<QuizAnswers>({
-    pet: '', 
-    query1: {answer: '', type: ''},
-    query2: {answer: '', type: ''},
-    query3: {answer: '', type: ''}
+    pet: '',
+    query1: { answer: '', type: '' },
+    query2: { answer: '', type: '' },
+    query3: { answer: '', type: '' }
   })
 
   useEffect(() => {
