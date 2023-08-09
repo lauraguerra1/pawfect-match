@@ -9,6 +9,7 @@ import back from '../../images/back.png'
 import bookmark from '../../images/bookmark.png'
 import emptyBookmark from '../../images/empty-bookmark.png'
 import './PetDetails.css'
+import DeleteWarning from "../DeleteWarning/DeleteWarning"
 
 interface PetDetailsProps {
   deletePet: (pet: Cat | Dog) => void
@@ -19,7 +20,18 @@ interface PetDetailsProps {
 const PetDetails = ({menuOpen, deletePet, addPet }: PetDetailsProps) => {
   const petName = useParams().name?.replaceAll('-', ' ')
   const [petSaved, setPetSaved] = useState<Cat | Dog | null>(null)
+  const [modalOpen, setModalOpen] = useState(false)
   const navigate = useNavigate();
+
+  const openModal = () => {
+    document.querySelector('dialog')?.showModal()
+    setModalOpen(true)
+  }
+
+  const closeModal = () => {
+    document.querySelector('dialog')?.close()
+    setModalOpen(false)
+  }
 
   useEffect(() => {
     const storage = localStorage.getItem('pawfectMatches')
@@ -31,15 +43,10 @@ const PetDetails = ({menuOpen, deletePet, addPet }: PetDetailsProps) => {
   }
 
   return (
-    <>
+    <div className={modalOpen ? 'blur' : '' }>
     <div className='top-buttons'>
       <Link to='/saved-pets'><img className='back-btn' src={back} alt='back button' /></Link>
-        <button style={{ border: 'none', background: 'none', cursor: 'pointer' }}
-          onClick={() => {
-            deletePet(petSaved)
-            navigate(-1)
-          }}
-        ><img src={bookmark} alt='bookmark button' /></button>
+      <button style={{ border: 'none', background: 'none', cursor: 'pointer' }} onClick={openModal}><img src={bookmark} alt='bookmark button' /></button>
     </div>
     <section className={menuOpen ? 'hidden' : 'pet-details-page'}>
       <div style={{
@@ -74,8 +81,9 @@ const PetDetails = ({menuOpen, deletePet, addPet }: PetDetailsProps) => {
           </ul>
         </article>
       </div>
-    </section>
-    </>
+      </section>
+      <DeleteWarning closeModal={closeModal} deletePet={deletePet} pet={petSaved} nav={true} />
+    </div>
   )
 
 }
