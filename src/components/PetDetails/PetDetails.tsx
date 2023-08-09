@@ -16,9 +16,10 @@ interface PetDetailsProps {
   deletePet: (pet: Cat | Dog) => void
   updateError: (error: Error | null) => void
   menuOpen: boolean
+  error: Error | null
 }
 
-const PetDetails = ({menuOpen, deletePet, updateError }: PetDetailsProps) => {
+const PetDetails = ({error, menuOpen, deletePet, updateError }: PetDetailsProps) => {
   const petName = useParams().name?.replaceAll('-', ' ')
   const [petSaved, setPetSaved] = useState<Cat | Dog | null>(null)
   const [modalOpen, setModalOpen] = useState(false)
@@ -54,6 +55,8 @@ const PetDetails = ({menuOpen, deletePet, updateError }: PetDetailsProps) => {
       setPetSaved(pet)
       callAPI(pet)
     }
+
+    return () => updateError(null)
   }, [])
 
   if (!petSaved) {
@@ -68,9 +71,10 @@ const PetDetails = ({menuOpen, deletePet, updateError }: PetDetailsProps) => {
       </div>
     )
   }
+  if (error === null) {
 
-  return (
-    <div className={modalOpen ? 'blur' : '' }>
+    return (
+      <div className={modalOpen ? 'blur' : '' }>
     <div className='top-buttons'>
       <Link to='/saved-pets'><img className='back-btn' src={back} alt='back button' /></Link>
       <button style={{ border: 'none', background: 'none', cursor: 'pointer' }} onClick={openModal}><img src={bookmark} alt='bookmark button' /></button>
@@ -121,6 +125,7 @@ const PetDetails = ({menuOpen, deletePet, updateError }: PetDetailsProps) => {
       <DeleteWarning closeModal={closeModal} deletePet={deletePet} pet={petSaved} nav={true} />
     </div>
   )
+}
 
 }
 
