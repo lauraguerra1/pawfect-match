@@ -146,6 +146,18 @@ li::marker {
   animation: celebrate 2s linear infinite;
 }
 
+.column-flex {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 20px;
+  justify-content: flex-start;
+  height: auto;
+  width: 100%;
+  max-height: 90vh;
+  margin: auto;
+  overflow-y: auto;
+}
+
 @keyframes celebrate {
   0% {
     color: rgb(244, 40, 173);

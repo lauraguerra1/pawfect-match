@@ -10,9 +10,10 @@ import { Routes, Route } from 'react-router-dom';
 import { QuizAnswers } from '../../types';
 import { Question } from '../Quiz/QuizData';
 import {Dog, Cat} from '../../types'
-import { Abyssinian, GoldenRetriver } from '../Results/BackupResults';
 import EmptyState from '../EmptyState/EmptyState';
 import ErrorPage from '../ErrorPage/ErrorPage';
+import PetDetails from '../PetDetails/PetDetails';
+
 
 const App = () => {
   const [error, setError] = useState<Error | null>(null)
@@ -20,10 +21,10 @@ const App = () => {
   const [answersReady, setAnswersReady] = useState(false)
   const [savedPets, setSavedPets] = useState<(Dog | Cat)[]>([])
   const [quizAnswers, setQuizAnswers] = useState<QuizAnswers>({
-    pet: '', 
-    query1: {answer: '', type: ''},
-    query2: {answer: '', type: ''},
-    query3: {answer: '', type: ''}
+    pet: '',
+    query1: { answer: '', type: '' },
+    query2: { answer: '', type: '' },
+    query3: { answer: '', type: '' }
   })
 
   useEffect(() => {
@@ -71,6 +72,8 @@ const App = () => {
     updateSavedPets(filteredPets)
   }
 
+  const checkIfSaved = (name: string) => savedPets.find(pet => pet.name === name) ? true : false 
+
   return (
     <main>
       {menuOpen? <Menu openOrClose={openOrClose}/> : <NavBar openOrClose={openOrClose}/>}
@@ -78,9 +81,10 @@ const App = () => {
         <Routes>
           <Route path='/' element={<LandingPage menuOpen={menuOpen}/>}/>
           <Route path='/quiz' element={<Quiz menuOpen={menuOpen} updateAnswers={updateAnswers} notifyReady={notifyReady}/>} />
-          <Route path='/results' element={answersReady ? <Results error={error} quizAnswers={quizAnswers} menuOpen={menuOpen} updateError={updateError} clearAnswers={clearAnswers} savePet={addToSavedPets} savedPets={savedPets}/> : <EmptyState menuOpen={menuOpen} noResults={true}/>} />
+          <Route path='/results' element={answersReady ? <Results error={error} quizAnswers={quizAnswers} menuOpen={menuOpen} updateError={updateError} clearAnswers={clearAnswers} savePet={addToSavedPets} checkIfSaved={checkIfSaved}/> : <EmptyState menuOpen={menuOpen} noResults={true}/>} />
           <Route path='/saved-pets' element={<MyPets savedPets={savedPets} deletePet={removeFromSavedPets} menuOpen={menuOpen}/>}/>
-          {['', '/quiz/', '/results/', '/saved-pets/'].map(path => <Route key={path} path={`${path}*`} element={<EmptyState menuOpen={menuOpen} noResults={false}/>}/>)}
+          <Route path='/saved-pets/:name' element={<PetDetails updateError={updateError} menuOpen={menuOpen} deletePet={removeFromSavedPets} />}/>
+          {['', '/quiz/', '/results/'].map(path => <Route key={path} path={`${path}*`} element={<EmptyState menuOpen={menuOpen} noResults={false} />} />)}
         </Routes>
     </main>
   );
