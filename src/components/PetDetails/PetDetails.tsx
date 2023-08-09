@@ -1,5 +1,5 @@
 import { Dog, Cat } from "../../types"
-import { useNavigate, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import EmptyState from "../EmptyState/EmptyState"
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
@@ -7,21 +7,28 @@ import { isCat, isDog } from "../../helpers"
 import PawRating from "../PawRating/PawRating"
 import back from '../../images/back.png'
 import bookmark from '../../images/bookmark.png'
-import emptyBookmark from '../../images/empty-bookmark.png'
 import './PetDetails.css'
 import DeleteWarning from "../DeleteWarning/DeleteWarning"
+import { getChatGPTFunFact } from "../../apiCalls"
 
 interface PetDetailsProps {
   deletePet: (pet: Cat | Dog) => void
-  addPet: (pet: Cat | Dog) => void
   menuOpen: boolean
 }
 
-const PetDetails = ({menuOpen, deletePet, addPet }: PetDetailsProps) => {
+const PetDetails = ({menuOpen, deletePet }: PetDetailsProps) => {
   const petName = useParams().name?.replaceAll('-', ' ')
   const [petSaved, setPetSaved] = useState<Cat | Dog | null>(null)
   const [modalOpen, setModalOpen] = useState(false)
-  const navigate = useNavigate();
+
+  const callAPI = async (pet: Cat | Dog) => {
+    try {
+      const funFact = await getChatGPTFunFact(pet.name)
+      console.log(funFact.choices[0].text)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const openModal = () => {
     document.querySelector('dialog')?.showModal()
@@ -35,7 +42,11 @@ const PetDetails = ({menuOpen, deletePet, addPet }: PetDetailsProps) => {
 
   useEffect(() => {
     const storage = localStorage.getItem('pawfectMatches')
-    if (storage) setPetSaved(JSON.parse(storage).find((animal: Cat | Dog) => animal.name === petName)) 
+    if (storage) {
+      const pet = JSON.parse(storage).find((animal: Cat | Dog) => animal.name === petName)
+      setPetSaved(pet)
+      callAPI(pet)
+    }
   }, [])
 
   if (!petSaved) {
