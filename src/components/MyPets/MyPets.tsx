@@ -3,6 +3,7 @@ import { Dog, Cat } from "../../types"
 import Pet from '../Pet/Pet'
 import { useState } from 'react'
 import empty from '../../images/empty-saved.png'
+import DeleteWarning from '../DeleteWarning/DeleteWarning'
 
 interface MyPetsProps {
   savedPets: (Dog | Cat)[]
@@ -50,7 +51,8 @@ const MyPets = ({savedPets, deletePet, menuOpen}: MyPetsProps) => {
           </section>
         </section>
       </div>
-      <dialog className='dialog' >
+      <DeleteWarning closeModal={closeModal} deletePet={deletePet}  pet={petToDelete} />
+      {/* <dialog className='dialog' >
       <div className='dialog-flex'>
         <p>Are you sure you want to remove the {petToDelete?.name} from your pets?</p>
         <div className='dialog-buttons'>
@@ -65,7 +67,7 @@ const MyPets = ({savedPets, deletePet, menuOpen}: MyPetsProps) => {
           </button>
         </div>
       </div>
-    </dialog>
+    </dialog> */}
     </div>
   )
 }
