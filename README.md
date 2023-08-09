@@ -14,10 +14,11 @@ Technologies used:<br>
   <br>
   <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" />
   <img src="https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white"/>
+  <img src="https://img.shields.io/badge/chatGPT-74aa9c?style=for-the-badge&logo=openai&logoColor=white" /> 
 </div>
 
 ## Abstract: 
-Pawfect Match is a fun and interactive app designed to help users find the perfect cat or dog breed that best suits their personality. The app provides a personalized quiz that analyzes the user's preferences, lifestyle, and personality traits to suggest the ideal pet match. Additionally, users can save their favorite pets to a collection for future reference. I hope this app brings you joy and helps you find your perfect furry companion! Happy matching! 🐾
+Pawfect Match is a fun and interactive app designed to help users find the perfect cat or dog breed that best suits their personality. The app provides a personalized quiz that analyzes the user's preferences, lifestyle, and personality traits to suggest the ideal pet match. Additionally, users can save their favorite pets to a collection for future reference. After clicking on a saved pet to view more details, chat gpt is prompted to return a fun fact about the breed! I hope this app brings you joy and helps you find your perfect furry companion! Happy matching! 🐾
 
 # Preview of App:
  <div align='center'> 
@@ -26,7 +27,12 @@ Pawfect Match is a fun and interactive app designed to help users find the perfe
   <h2>Save & Unsave Matches</h2>
 
   <img src='https://github.com/lauraguerra1/pawfect-match/assets/121131581/baf8dfe1-3f2e-4f97-8eaf-2952690687fd' alt='gif of saving and unsaving an item'>
+
+  <h2>View Details & Get a Fun Fact from Chat GPT</h2>
+  <img src="https://github.com/lauraguerra1/pawfect-match/assets/121131581/ba597409-a724-431d-8ffa-e995ce56b104" alt="gif of clicking on the details for an australian shepherd and viewing the fun fact about the breed"/>
+  
  </div>
+ 
 
 ## Installation Instructions:
 
