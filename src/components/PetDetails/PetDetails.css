@@ -1,9 +1,12 @@
+.details-page-container {
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
 .pet-details-page {
   display: flex; 
   flex-direction: column;
   align-items: center;
-  max-height: 85vh;
-  overflow-y: auto;
 }
 
 .top-buttons {
@@ -12,11 +15,11 @@
   padding: 0px 5px;
 }
 
-.pet-details-page::-webkit-scrollbar, .pet-details-article article::-webkit-scrollbar {
+.details-page-container::-webkit-scrollbar, .pet-details-article article::-webkit-scrollbar {
   width: 10px
 }
 
-.pet-details-page::-webkit-scrollbar-thumb, .pet-details-article article::-webkit-scrollbar-thumb {
+.details-page-container::-webkit-scrollbar-thumb, .pet-details-article article::-webkit-scrollbar-thumb {
   background-color: rgba(128, 205, 228, 0.789);
   border-radius: 25px;
 }
