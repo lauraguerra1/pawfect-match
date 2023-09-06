@@ -34,6 +34,7 @@ const Results = ({error, menuOpen, quizAnswers, updateError, clearAnswers, saveP
   const [queryResponse, setQueryResponse] = useState<QueryResponse>({query1: [], query2: [], query3: []})
   const [loading, setLoading] = useState(true)
   const [petAlreadySaved, setPetAlreadySaved] = useState(false)
+  const [readyToParse, setReadyToParse] = useState(false)
 
   useEffect(() => {
     if(pet === 'cat') {
@@ -47,23 +48,16 @@ const Results = ({error, menuOpen, quizAnswers, updateError, clearAnswers, saveP
   }, [catInfo, dogInfo])
 
   useEffect(() => {
-    const apiCall = async (quizAnswers: QuizAnswers) => {
+    const apiCall = (quizAnswers: QuizAnswers) => {
       setLoading(true)
-        Object.keys(quizAnswers).forEach(async key => {
-          const query = quizAnswers[key]
-          if (query !== 'cat' && query !== 'dog') {
-            try {
-              const animalInfo = await getAnimalInfo(`${pet}s?${query.type}=${query.answer}`)
-              setQueryResponse(prev => {
-                const newRes = {...prev, [key]: animalInfo}
-                return newRes
-              })
-            }catch(error) {
-              setLoading(false)
-              if(error instanceof Error) updateError(error)
-            }
-          }
-        })
+      const fetchCalls = Object.keys(quizAnswers).map(key => `${pet}s?${quizAnswers[key].type}=${quizAnswers[key].answer}`).slice(1)
+      Promise.all([getAnimalInfo(fetchCalls[0]), getAnimalInfo(fetchCalls[1]), getAnimalInfo(fetchCalls[2])]).then(values => {
+        setQueryResponse({ query1: values[0], query2: values[1], query3: values[2] })
+        setReadyToParse(true)
+      }).catch(error => {
+        setLoading(false)
+        if(error instanceof Error) updateError(error)
+      })
     }
 
     apiCall(quizAnswers)
@@ -74,9 +68,9 @@ const Results = ({error, menuOpen, quizAnswers, updateError, clearAnswers, saveP
   }, [])
 
   useEffect(() => {
-    if(queryResponse.query1.length && queryResponse.query2.length && queryResponse.query3.length) {
-      setLoading(false)
+    if (readyToParse) {
       getPawfectMatch(queryResponse.query1, queryResponse.query2, queryResponse.query3)
+      setLoading(false)
     }
   }, [queryResponse])
 
